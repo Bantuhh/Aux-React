@@ -1,0 +1,170 @@
+/* Styles.css for Web Responsive View */
+
+@import url("https://fonts.googleapis.com/css?family=Raleway:800&display=swap");
+
+@import url("https://fonts.googleapis.com/css?family=Raleway:500,800&display=swap");
+
+div.WelcomeTextWeb {
+  text-align: center;
+
+  height: 100vh;
+}
+
+div.WelcomeTextWeb h1 {
+  margin: auto;
+  position: relative;
+  top: 30%;
+
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 54px;
+
+  color: #ea711a;
+
+  mix-blend-mode: normal;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+div.WelcomeTextWeb hr {
+  position: relative;
+  top: 30%;
+
+  border: 1px solid #c4c4c4;
+  width: 268px;
+}
+
+div.WelcomeTextWeb h3 {
+  margin: 0 auto;
+  position: relative;
+  top: 30%;
+
+  margin: auto;
+  width: 620px;
+
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+
+  color: #c4c4c4;
+}
+
+div.WelcomeTextWeb img.downArrow {
+  margin: auto;
+  height: 27px;
+}
+
+.imgContainerWeb {
+  position: relative;
+  top: 60%;
+}
+
+/* INFO SQUARES STYLES */
+
+.infoSquareWeb1 {
+  width: 342px;
+  height: 430px;
+
+  text-align: center;
+  z-index: 100;
+
+  background: rgba(196, 196, 196, 0.2);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 66px;
+}
+
+.ChooseYourMusicImg {
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+
+  height: 314px;
+
+  margin-top: 60px;
+}
+
+.infoSquareWeb2 {
+  width: 342px;
+  height: 430px;
+
+  z-index: 99;
+
+  background: rgba(196, 196, 196, 0.2);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 66px;
+}
+
+.ListenTogetherImg {
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+
+  height: 314px;
+
+  margin-top: 60px;
+}
+
+.infoSquareWeb3 {
+  /* position: absolute; */
+  width: 342px;
+  height: 430px;
+
+  background: rgba(196, 196, 196, 0.2);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 66px;
+}
+
+.AllOnAuxImg {
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+
+  height: 314px;
+
+  margin-top: 60px;
+}
+
+.infoSquareContainerWeb {
+  display: flex;
+  justify-content: space-around;
+
+  position: relative;
+
+  top: -35px;
+
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+/* HOME SIGN IN STYLES */
+
+div.homeSignIn {
+  text-align: center;
+  margin-top: 200px;
+
+  height: 100vh;
+}
+
+div.homeSignIn img.AuxLogoText {
+  margin: auto;
+  height: 183px;
+}
+
+.logoContainerWeb {
+  position: relative;
+  top: 13%;
+}
+
+div.homeSignIn hr {
+  position: relative;
+  top: 20%;
+
+  border: 1px solid #c4c4c4;
+  width: 653px;
+}

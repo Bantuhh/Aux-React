@@ -1,0 +1,86 @@
+/* Styles.css for Mobile Responsive View */
+
+@import url("https://fonts.googleapis.com/css?family=Raleway:800&display=swap");
+
+@import url("https://fonts.googleapis.com/css?family=Raleway:500,800&display=swap");
+
+div.WelcomeTextTablet {
+  text-align: center;
+
+  height: 100vh;
+}
+
+@media screen and (orientation: landscape) {
+  div.WelcomeTextTablet h1 {
+    margin: auto;
+    position: relative;
+    top: 35%;
+
+    font-family: "Raleway", sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 42px;
+
+    color: #ea711a;
+
+    mix-blend-mode: normal;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
+
+@media screen and (orientation: portrait) {
+  div.WelcomeTextTablet h1 {
+    margin: auto;
+    position: relative;
+    top: 35%;
+
+    font-family: "Raleway", sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 42px;
+
+    color: #ea711a;
+
+    mix-blend-mode: normal;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
+
+div.WelcomeTextTablet hr {
+  position: relative;
+  top: 35%;
+
+  border: 1px solid #c4c4c4;
+  width: 200px;
+}
+
+div.WelcomeTextTablet h3 {
+  margin: 0 auto;
+  position: relative;
+  top: 35%;
+
+  width: 500px;
+  /* margin-left: 100px;
+  margin-right: 100px; */
+
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 25px;
+
+  color: #c4c4c4;
+}
+
+div.WelcomeTextTablet img.downArrow {
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+
+  height: 22px;
+}
+
+.imgContainerTablet {
+  position: relative;
+  top: 65%;
+}
