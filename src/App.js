@@ -13,12 +13,23 @@ import {
   Redirect
 } from "react-router-dom";
 
+// Import Auth0Context instead of useAuth0
+import { Auth0Context } from "./react-auth0-spa";
+
 class App extends Component {
   componentDidMount() {
     document.body.style.background = "#252525";
   }
 
+  static contextType = Auth0Context;
+
   render() {
+    const { loading } = this.context;
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <Router>
         {/*All our Routes goes here!*/}
