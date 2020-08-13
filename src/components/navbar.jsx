@@ -17,10 +17,14 @@ class NavBar extends Component {
           <img src={AuxNavImg} alt="" />
         </a>
         {!isAuthenticated && (
-          <button onClick={() => loginWithRedirect({})}>Log in</button>
+          <button
+            className="loginBtn"
+            onClick={() => loginWithRedirect({})}></button>
         )}
 
-        {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+        {isAuthenticated && (
+          <button className="logoutBtn" onClick={() => logout()}></button>
+        )}
       </nav>
     );
   }

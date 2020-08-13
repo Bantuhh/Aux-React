@@ -7,3 +7,21 @@ img {
   height: 50px;
   margin-left: 10px;
 }
+
+.loginBtn {
+  background: url("../resources/images/LoginSignup.png");
+  background-size: cover;
+  height: 27px;
+  width: 156px;
+  border: none;
+  margin-right: 25px;
+}
+
+.logoutBtn {
+  background: url("../resources/images/Logout.png");
+  background-size: cover;
+  height: 25px;
+  width: 81px;
+  border: none;
+  margin-right: 25px;
+}

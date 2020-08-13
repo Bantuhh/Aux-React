@@ -1,0 +1,310 @@
+div.libraryFlex {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+
+  width: calc(100vw - 64px);
+  height: calc(100vh - 76px);
+
+  margin-top: 76px;
+  margin-left: 64px;
+}
+
+div.libraryMiddle {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+
+  height: 100%;
+  width: 80%;
+
+  border-top: 1px solid #c4c4c4;
+  border-left: 1px solid #c4c4c4;
+}
+
+div.libraryRight {
+  height: 100%;
+  width: 20%;
+
+  text-align: center;
+
+  border-top: 1px solid #c4c4c4;
+  border-left: 1px solid #c4c4c4;
+}
+
+img.songOptionsAlbumImg {
+  height: auto;
+  width: 40%;
+
+  margin-bottom: 15px;
+  margin-top: 35%;
+  margin-left: 0px;
+
+  position: relative;
+}
+
+p.songOptionsTitle {
+  position: relative;
+
+  font-family: "Raleway", sans-serif;
+  font-style: bold;
+  font-weight: 700;
+  font-size: min(1.3vw, 12px);
+
+  color: #ffffff;
+
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+p.songOptionsArtist {
+  margin-top: 8px;
+  margin-bottom: 50px;
+  position: relative;
+
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: min(1vw, 11px);
+
+  color: #ffffff;
+}
+
+#firstSeparatorLine {
+  left: 15%;
+  width: 68%;
+  height: 0px;
+
+  border-top: 1px solid #c4c4c4;
+
+  position: relative;
+  margin-bottom: 15px;
+  margin-top: -15px;
+}
+
+#addToQueueBtn {
+  background: url("../resources/images/AddToQueue.png");
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: none;
+
+  padding-top: 18.37%;
+  width: 70%;
+  margin: auto;
+
+  position: relative;
+}
+
+#secondSeparatorLine {
+  left: 15%;
+  width: 58%;
+  height: 0px;
+
+  border-top: 1px solid #c4c4c4;
+
+  position: relative;
+
+  margin-bottom: 15px;
+  margin-top: -5px;
+}
+
+#viewOnSpotifyBtn {
+  background: url("../resources/images/ViewOnSpotify.png");
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: none;
+
+  padding-top: 18.37%;
+  width: 70%;
+  margin: auto;
+
+  position: relative;
+}
+
+div.libraryQueryDiv {
+  height: 22%;
+  width: 100%;
+  position: relative;
+  margin: auto;
+}
+
+div.playlistHeaderDiv {
+  height: 31%;
+  width: 100%;
+  position: relative;
+  margin: auto;
+}
+
+div.playlistHeaderInfoDiv {
+  position: relative;
+  margin: auto;
+  width: 50%;
+
+  text-align: center;
+}
+
+#playlistHeaderImg {
+  height: 75%;
+  width: 90px;
+
+  margin-bottom: 15px;
+  margin-top: 50px;
+  margin-left: 0px;
+
+  position: relative;
+}
+
+p.playlistHeaderTitle {
+  margin: auto;
+  position: relative;
+
+  font-family: "Raleway", sans-serif;
+  font-style: bold;
+  font-weight: 700;
+  font-size: min(1.3vw, 12px);
+
+  color: #ffffff;
+
+  top: 31%;
+}
+
+p.numTracksHeader {
+  margin: auto;
+  position: relative;
+
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: min(1vw, 11px);
+
+  color: #ffffff;
+}
+
+#backToLibraryBtn {
+  background: url("../resources/images/BackArrow.png");
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: none;
+
+  height: 20px;
+  width: 20px;
+  margin: auto;
+
+  position: absolute;
+
+  top: 28px;
+  left: 35px;
+}
+
+#playlistOptionsBtn {
+  background: url("../resources/images/Options.png");
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: none;
+
+  height: 40px;
+  width: 40px;
+  margin: auto;
+
+  position: absolute;
+
+  top: 15px;
+  right: 25px;
+}
+
+div.libraryTabDiv {
+  height: 96px;
+  width: fit-content;
+  text-align: center;
+
+  margin: auto;
+}
+
+button.tablinks {
+  margin-top: 30px;
+}
+
+#spotifyLibraryBtn {
+  background: url("../resources/images/Spotify.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  position: relative;
+  border: none;
+
+  height: 35px;
+  width: 55px;
+  margin: auto;
+
+  margin-left: 25px;
+}
+
+div.libraryInputDiv {
+  height: 40%;
+}
+
+div.libraryButtonDiv {
+  height: 50%;
+  text-align: center;
+}
+
+/* Style the buttons inside the tab */
+.libraryTabDiv button {
+  border: 1px solid #ffffff !important;
+  border-radius: 4px;
+  background: none;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px 20px;
+  transition: 0.3s;
+  font-size: 13px;
+
+  background-color: #ffffff;
+
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: min(0.9vw, 13px);
+
+  color: #252525;
+}
+
+/* Change background color of buttons on hover */
+.libraryTabDiv button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.libraryTabDiv button.active {
+  background-color: #252525;
+
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: min(0.9vw, 13px);
+
+  color: #ffffff;
+}
+
+#libraryDivHeader {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: min(0.9vw, 10px);
+
+  color: #ffffff;
+  position: absolute;
+
+  bottom: -12px;
+  left: 11px;
+}
