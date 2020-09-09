@@ -21,7 +21,6 @@ class SearchItem extends Component {
       }
       numArtists += 1;
     }
-    console.log(artistString);
 
     return (
       <div className="searchItemDiv">
@@ -31,7 +30,9 @@ class SearchItem extends Component {
           <p className="songArtist">{artistString}</p>
         </div>
         <div className="songOptionsDiv">
-          <button className="songOptions"></button>
+          <button
+            className="songOptions"
+            onClick={() => this.props.showSongOptions()}></button>
         </div>
       </div>
     );

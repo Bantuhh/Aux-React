@@ -31,10 +31,49 @@ import "font-awesome/css/font-awesome.min.css";
 // Import Auth0Context instead of useAuth0
 import { Auth0Context } from "./react-auth0-spa";
 
+import SpotifyPlayer from "react-spotify-web-playback";
+
 class App extends Component {
   componentDidMount() {
     document.body.style.background = "#252525";
   }
+  state = {
+    currentSong: [],
+    queue: [],
+    spotifyURIQueue: ["spotify:track:2aPTvyE09vUCRwVvj0I8WK"],
+    timeToSkip: true,
+    currentSongsPlatform: "Spotify",
+    spotifyAccessToken: "",
+  };
+
+  popQueue = (queue) => {
+    if (queue.length == 0) {
+      return ["None", []];
+    }
+
+    var currentSong = queue.pop(0);
+
+    return [currentSong, queue];
+  };
+
+  readGlobalQueue = () => {
+    if (global.sessionQueue.length === 0) {
+      return;
+    } else if (global.isContentPlaying) {
+    }
+  };
+
+  checkPlayerStatus = (state) => {
+    console.log("Player Status: ", state);
+  };
+
+  spotifyLogin = () => {
+    console.log("spotifyAccessToken", global.spotifyAccessToken);
+
+    this.setState({
+      spotifyAccessToken: global.spotifyAccessToken,
+    });
+  };
 
   static contextType = Auth0Context;
 
@@ -113,6 +152,14 @@ class App extends Component {
                   </SideNav.Nav>
                 </SideNav>
               )}
+              {isAuthenticated && (
+                <SpotifyPlayer
+                  token={this.state.spotifyAccessToken}
+                  uris={"spotify:track:2aPTvyE09vUCRwVvj0I8WK"}
+                  play={true}
+                  callback={(state) => this.checkPlayerStatus(state)}
+                />
+              )}
               <main>
                 <Switch>
                   <Route exact path="/Session" component={Session} />
@@ -121,7 +168,14 @@ class App extends Component {
                   {!isAuthenticated && (
                     <Route exact path="/Welcome" component={Welcome} />
                   )}
-                  <Route exact path="/Accounts" component={Accounts} />
+
+                  <Route
+                    exact
+                    path="/Accounts"
+                    render={(props) => (
+                      <Accounts {...props} spotifyLogin={this.spotifyLogin} />
+                    )}
+                  />
                   <Route exact path="/signUp" component={SignUp} />
                   <Route exact path="/404" component={NotFoundPage} />
                   {isAuthenticated && <Redirect to="/Session" />}

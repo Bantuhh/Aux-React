@@ -5,20 +5,7 @@ import "../../styles/SearchResults.css";
 import SearchItem from "./searchItem";
 
 class SearchResults extends Component {
-  state = {
-    queue: [
-      {
-        songTitle: "Ghost Voices",
-        artist: "Virtual Self",
-        albumImgURL: require("../../resources/images/GhostVoices.png"),
-      },
-      {
-        songTitle: "Dosas and Mimosas",
-        artist: "Cherub",
-        albumImgURL: require("../../resources/images/DosasandMimosas.png"),
-      },
-    ],
-  };
+  state = {};
   render() {
     const { trackSearchResults } = this.props;
 
@@ -30,7 +17,12 @@ class SearchResults extends Component {
     return (
       <div className="searchDiv">
         {trackSearchResultsArray.map((item) => (
-          <SearchItem songInfo={item} />
+          <SearchItem
+            songInfo={item}
+            showSongOptions={() =>
+              this.props.showSongOptions(Object.assign({}, item))
+            }
+          />
         ))}
       </div>
     );

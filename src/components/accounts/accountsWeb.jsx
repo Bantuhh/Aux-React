@@ -12,8 +12,8 @@ import Spotify from "spotify-web-api-js";
 const spotifyWebApi = new Spotify();
 
 class AccountsWeb extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     const params = this.getHashParams();
 
     if (params.access_token) {
@@ -27,6 +27,9 @@ class AccountsWeb extends Component {
         });
         global.spotifyUserImage = response.images[0].url;
       });
+
+      console.log(this);
+      this.props.spotifyLogin();
     }
 
     this.state = {

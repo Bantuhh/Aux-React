@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 
+import { addSongToQueue } from "../../utils/queueInterface";
+
+import { viewOnSpotify } from "../../utils/spotifyInterface";
+
 import "../../styles/SearchWeb.css";
 import {
   NotificationContainer,
@@ -20,6 +24,9 @@ class SearchWeb extends Component {
     spotifySearch:
       Object.keys(global.spotifyTrackSearchResults).length == 0 ? false : true,
     lastSpotifySearchQuery: global.lastSpotifySearchQuery,
+    songOptionsSelected: false,
+    selectedSongInfo: "HI",
+    selectedPlatform: "Spotify",
   };
 
   createNotification = (type) => {
@@ -53,6 +60,10 @@ class SearchWeb extends Component {
   };
 
   spotifySearchTrack = () => {
+    this.setState({
+      selectedPlatform: "Spotify",
+    });
+
     var query = document.getElementById("searchQuery").value;
     spotifyWebApi.searchTracks(query).then(
       (response) => {
@@ -71,6 +82,33 @@ class SearchWeb extends Component {
         console.error(reason); // Error!
       }
     );
+  };
+
+  showSongOptions = (songInfo) => {
+    console.log(songInfo);
+
+    this.setState({
+      songOptionsSelected: true,
+      selectedSongInfo: songInfo,
+    });
+  };
+
+  formatArtistString = (artistObj) => {
+    var artistString = "";
+    var numArtists = 0;
+
+    for (var key in Object.keys(artistObj)) {
+      var artist = artistObj[key];
+
+      if (numArtists > 0) {
+        artistString = artistString + ", " + artist.name;
+      } else {
+        artistString = artist.name;
+      }
+      numArtists += 1;
+    }
+
+    return artistString;
   };
 
   render() {
@@ -101,10 +139,44 @@ class SearchWeb extends Component {
             </p>
           </div>
           <SearchResults
-            trackSearchResults={this.state.trackSearchResults}></SearchResults>
+            trackSearchResults={this.state.trackSearchResults}
+            showSongOptions={this.showSongOptions}></SearchResults>
           <NotificationContainer />
         </div>
-        <div className="searchRight"></div>
+        {/* If Song Options was selected, show selected song info on right side */}
+        {this.state.songOptionsSelected ? (
+          <div className="searchRight">
+            <img
+              className="songOptionsAlbumImg"
+              src={this.state.selectedSongInfo.album.images[0].url}
+              alt=""></img>
+
+            <p className="songOptionsTitle">
+              {this.state.selectedSongInfo.name}
+            </p>
+            <p className="songOptionsArtist">
+              {this.formatArtistString(this.state.selectedSongInfo.artists)}
+            </p>
+            <div id="firstSeparatorLine"></div>
+            <button
+              id="addToQueueBtn"
+              onClick={() =>
+                addSongToQueue(
+                  this.state.selectedPlatform,
+                  this.state.selectedSongInfo
+                )
+              }></button>
+            <div id="secondSeparatorLine"></div>
+            <button
+              id="viewOnSpotifyBtn"
+              onClick={() =>
+                viewOnSpotify(this.state.selectedSongInfo)
+              }></button>
+          </div>
+        ) : (
+          // If nothing selected, show nothing on right side
+          <div className="searchRight"></div>
+        )}
       </div>
     );
   }

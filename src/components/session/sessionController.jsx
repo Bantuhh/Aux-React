@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import "../../styles/SessionController.css";
 
+import { play, pause } from "../../utils/spotifyInterface";
+
 class SessionController extends Component {
   state = {
     isPlaying: false,
@@ -16,11 +18,15 @@ class SessionController extends Component {
     if (this.state.isPlaying) {
       this.setState({ isPlaying: false });
       console.log(this.state.isPlaying);
+      pause(global.spotifyAccessToken);
     } else {
       this.setState({ isPlaying: true });
       console.log(this.state.isPlaying);
+      play(global.spotifyAccessToken);
     }
   };
+
+  // Spotify Web Api funcs
 
   render() {
     return (

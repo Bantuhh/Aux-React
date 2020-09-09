@@ -15,20 +15,24 @@ class Accounts extends Component {
 
         <MediaQuery query="(min-device-width: 1224px)">
           <MediaQuery query="(min-width: 1225px)">
-            <AccountsWeb></AccountsWeb>
+            <AccountsWeb
+              spotifyLogin={() => this.props.spotifyLogin()}></AccountsWeb>
           </MediaQuery>
           <MediaQuery query="(max-width: 1224px)">
-            <AccountsWeb></AccountsWeb>
+            <AccountsWeb
+              spotifyLogin={() => this.props.spotifyLogin()}></AccountsWeb>
           </MediaQuery>
         </MediaQuery>
 
         <MediaQuery query="(max-device-width: 1224px)">
           <MediaQuery query="(min-device-width: 1024px)">
-            <AccountsMobile></AccountsMobile>
+            <AccountsMobile
+              spotifyLogin={() => this.props.spotifyLogin()}></AccountsMobile>
           </MediaQuery>
 
           <MediaQuery query="(max-device-width: 1023px)">
-            <AccountsMobile></AccountsMobile>
+            <AccountsMobile
+              spotifyLogin={() => this.props.spotifyLogin()}></AccountsMobile>
           </MediaQuery>
         </MediaQuery>
       </div>

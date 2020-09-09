@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 
+import { addSongToQueue, addPlaylistToQueue } from "../../utils/queueInterface";
+
+import { viewOnSpotify } from "../../utils/spotifyInterface";
+
 import "../../styles/LibraryWeb.css";
 import {
   NotificationContainer,
@@ -23,6 +27,7 @@ class LibraryWeb extends Component {
     songOptionsSelected: false,
     selectedSongInfo: "HI",
     playlistOptionsSelected: false,
+    selectedPlatform: "Spotify",
   };
 
   createNotification = (type) => {
@@ -56,6 +61,10 @@ class LibraryWeb extends Component {
   };
 
   getSpotifyLibrary = () => {
+    this.setState({
+      selectedPlatform: "Spotify",
+    });
+
     spotifyWebApi.getMySavedTracks({ limit: 50 }).then(
       (response) => {
         this.setState({
@@ -189,15 +198,6 @@ class LibraryWeb extends Component {
     return artistString;
   };
 
-  addToQueue = () => {};
-
-  viewOnSpotify = (songInfo) => {
-    let url = songInfo.external_urls.spotify;
-
-    var win = window.open(url, "_blank");
-    win.focus();
-  };
-
   render() {
     return (
       <div className="libraryFlex">
@@ -300,12 +300,19 @@ class LibraryWeb extends Component {
               {this.formatArtistString(this.state.selectedSongInfo.artists)}
             </p>
             <div id="firstSeparatorLine"></div>
-            <button id="addToQueueBtn" onClick={this.addToQueue}></button>
+            <button
+              id="addToQueueBtn"
+              onClick={() =>
+                addSongToQueue(
+                  this.state.selectedPlatform,
+                  this.state.selectedSongInfo
+                )
+              }></button>
             <div id="secondSeparatorLine"></div>
             <button
               id="viewOnSpotifyBtn"
               onClick={() =>
-                this.viewOnSpotify(this.state.selectedSongInfo)
+                viewOnSpotify(this.state.selectedSongInfo)
               }></button>
           </div>
         ) : // If Playlist Options was selected, show selected playlist info on right side
@@ -323,12 +330,19 @@ class LibraryWeb extends Component {
               {this.state.selectedPlaylistInfo.tracks.total + " songs"}
             </p>
             <div id="firstSeparatorLine"></div>
-            <button id="addToQueueBtn" onClick={this.addToQueue}></button>
+            <button
+              id="addToQueueBtn"
+              onClick={() =>
+                addPlaylistToQueue(
+                  this.state.selectedPlatform,
+                  this.state.selectedPlaylistInfo
+                )
+              }></button>
             <div id="secondSeparatorLine"></div>
             <button
               id="viewOnSpotifyBtn"
               onClick={() =>
-                this.viewOnSpotify(this.state.selectedPlaylistInfo)
+                viewOnSpotify(this.state.selectedPlaylistInfo)
               }></button>
           </div>
         ) : (
