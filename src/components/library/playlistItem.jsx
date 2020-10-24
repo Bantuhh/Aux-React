@@ -50,6 +50,9 @@ class PlaylistItem extends Component {
 
     return (
       <div className="playlistItemDiv">
+        <button
+          className="showPlaylist"
+          onClick={() => this.props.showPlaylist()}></button>
         <img className="playlistImg" src={playlistImgPath} alt=""></img>
         <div className="playlistInfoDiv">
           <p className="playlistTitle">{playlistInfo.name}</p>

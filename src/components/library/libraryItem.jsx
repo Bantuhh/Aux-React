@@ -25,10 +25,18 @@ class LibraryItem extends Component {
 
     return (
       <div className="libraryItemDiv">
+        <button
+          className="playNow"
+          onClick={() => this.props.playSongNow()}></button>
         <img className="albumImg" src={albumImgPath} alt=""></img>
         <div className="songInfoDiv">
           <p className="songTitle">{songInfo.name}</p>
           <p className="songArtist">{artistString}</p>
+        </div>
+        <div className="queueButtonDiv">
+          <button
+            className="queueButton"
+            onClick={() => this.props.addSongToQueue()}></button>
         </div>
         <div className="songOptionsDiv">
           <button

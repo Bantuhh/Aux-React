@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { SessionContext } from "../../session-context";
 
 import { addSongToQueue, addPlaylistToQueue } from "../../utils/queueInterface";
 
-import { viewOnSpotify } from "../../utils/spotifyInterface";
+import { viewOnSpotify, playURI } from "../../utils/spotifyInterface";
 
 import "../../styles/LibraryWeb.css";
 import {
@@ -37,7 +38,11 @@ class LibraryWeb extends Component {
         NotificationManager.info("Info message");
         break;
       case "success":
-        NotificationManager.success("Success message", "Title here");
+        NotificationManager.success(
+          "I knew you could do it.",
+          "Added song to queue",
+          1500
+        );
         break;
       case "warning":
         NotificationManager.warning(
@@ -180,6 +185,35 @@ class LibraryWeb extends Component {
     });
   };
 
+  playSongNow = (songInfo) => {
+    var songInfoCopy = songInfo.track;
+
+    const songURI = songInfoCopy["uri"];
+
+    global.youtubePlayer.pauseVideo();
+
+    playURI(songURI, global.spotifyAccessToken);
+
+    global.isContentPlaying = true;
+
+    // Set song as currently playing
+    global.currentlyPlaying = ["Spotify", songInfoCopy];
+
+    this.context.updateSessionQueue(global.sessionQueue);
+  };
+
+  // Add Spotify song to queue and send notification
+  addSongToQueue = (platform, songInfo) => {
+    addSongToQueue(platform, songInfo);
+    this.createNotification("success");
+  };
+
+  // Add Spotify song to queue and send notification
+  addPlaylistToQueue = (platform, playlistInfo) => {
+    addPlaylistToQueue(platform, playlistInfo);
+    this.createNotification("success");
+  };
+
   formatArtistString = (artistObj) => {
     var artistString = "";
     var numArtists = 0;
@@ -242,6 +276,8 @@ class LibraryWeb extends Component {
               selectedTab={this.state.selectedTab}
               showPlaylist={this.showPlaylist}
               showSongOptions={this.showSongOptions}
+              playSongNow={this.playSongNow}
+              addSongToQueue={this.addSongToQueue}
               libraryPullResults={
                 this.state.selectedTab === "Favorites"
                   ? this.state.spotifyFavoritesResults
@@ -278,6 +314,7 @@ class LibraryWeb extends Component {
               selectedTab={"Favorites"}
               showPlaylist={this.showPlaylist}
               showSongOptions={this.showSongOptions}
+              playSongNow={this.playSongNow}
               libraryPullResults={
                 this.state.selectedPlaylistTracksInfo
               }></LibraryResults>
@@ -303,7 +340,7 @@ class LibraryWeb extends Component {
             <button
               id="addToQueueBtn"
               onClick={() =>
-                addSongToQueue(
+                this.addSongToQueue(
                   this.state.selectedPlatform,
                   this.state.selectedSongInfo
                 )
@@ -333,7 +370,7 @@ class LibraryWeb extends Component {
             <button
               id="addToQueueBtn"
               onClick={() =>
-                addPlaylistToQueue(
+                this.addPlaylistToQueue(
                   this.state.selectedPlatform,
                   this.state.selectedPlaylistInfo
                 )
@@ -353,5 +390,7 @@ class LibraryWeb extends Component {
     );
   }
 }
+
+LibraryWeb.contextType = SessionContext;
 
 export default LibraryWeb;

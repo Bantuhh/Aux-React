@@ -25,6 +25,7 @@ img.albumImg {
 div.songInfoDiv {
   margin: auto;
   margin-left: 10px;
+  margin-top: 9px !important;
 
   width: 70%;
 }
@@ -39,7 +40,41 @@ p.songTitle {
 
   color: #ffffff;
 
-  top: 31%;
+  width: auto;
+  display: inline-block;
+}
+
+img.spotifyIcon {
+  /* background: url("../resources/images/Spotify.png"); */
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: 0;
+
+  height: 13px;
+  width: 13px;
+
+  margin-left: 13px;
+  margin-top: -1px;
+}
+
+img.youtubeIcon {
+  /* background: url("../resources/images/Spotify.png"); */
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: 0;
+
+  height: 13px;
+  width: 18px;
+
+  margin-left: 13px;
+  margin-top: -1px;
+}
+
+div.titleAndIcon {
 }
 
 p.songArtist {

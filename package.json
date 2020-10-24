@@ -22,9 +22,11 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.3",
     "react-spotify-web-playback": "^0.6.0",
+    "react-youtube": "^7.13.0",
     "soundcloud.ts": "^0.2.3",
     "spotify-web-api-js": "^0.22.1",
-    "use-spotify-web-playback-sdk": "^0.2.2"
+    "use-spotify-web-playback-sdk": "^0.2.2",
+    "youtube-api-search": "0.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

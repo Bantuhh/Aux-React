@@ -28,7 +28,6 @@ class AccountsWeb extends Component {
         global.spotifyUserImage = response.images[0].url;
       });
 
-      console.log(this);
       this.props.spotifyLogin();
     }
 

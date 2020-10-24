@@ -1,31 +1,32 @@
 import React, { Component } from "react";
 
+import { SessionContext } from "../../session-context";
+
 import "../../styles/SessionQueue.css";
 
 import QueueItem from "./queueItem";
 
 class SessionQueue extends Component {
   state = {
-    queue: [
-      {
-        songTitle: "Ghost Voices",
-        artist: "Virtual Self",
-        albumImgURL: require("../../resources/images/GhostVoices.png"),
-      },
-      {
-        songTitle: "Dosas and Mimosas",
-        artist: "Cherub",
-        albumImgURL: require("../../resources/images/DosasandMimosas.png"),
-      },
-    ],
+    queue: global.sessionQueue,
   };
   render() {
     return (
-      <div className="queueDiv">
-        {this.state.queue.map((item) => (
-          <QueueItem songInfo={item} />
-        ))}
-      </div>
+      <SessionContext.Consumer>
+        {({ sessionQueue }) => (
+          <div className="queueDiv">
+            {global.sessionQueue.length === 0 ? (
+              <div className="noQueueItemsDiv">
+                <p className="noQueueItemsText">
+                  Add some songs to the queue, eh?
+                </p>
+              </div>
+            ) : (
+              global.sessionQueue.map((item) => <QueueItem songInfo={item} />)
+            )}
+          </div>
+        )}
+      </SessionContext.Consumer>
     );
   }
 }

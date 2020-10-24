@@ -172,6 +172,29 @@ function play(token) {
 }
 exports.play = play;
 
+function playURI(uri, token) {
+  return __awaiter(this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+      return [
+        2,
+        fetch(
+          "https://api.spotify.com/v1/me/player/play?device_id=" +
+            global.spotifyDeviceID,
+          {
+            body: JSON.stringify({ uris: [uri] }),
+            headers: {
+              Authorization: "Bearer " + token,
+              "Content-Type": "application/json",
+            },
+            method: "PUT",
+          }
+        ),
+      ];
+    });
+  });
+}
+exports.playURI = playURI;
+
 function getDevices(token) {
   return fetch(`https://api.spotify.com/v1/me/player/devices`, {
     headers: {

@@ -13,6 +13,15 @@ div.searchItemDiv {
   border-bottom: 1px solid #c4c4c4;
 }
 
+div.searchItemDivInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+
+  width: 100%;
+  height: 100%;
+}
+
 img.albumImg {
   height: 75%;
   width: 45px;
@@ -73,4 +82,18 @@ button.songOptions {
   top: 49%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+
+button.playNow {
+  height: 12%;
+  width: 90%;
+
+  position: absolute;
+
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
 }

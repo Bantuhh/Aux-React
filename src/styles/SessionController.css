@@ -104,7 +104,51 @@ button:focus {
 }
 
 div.songText {
+  width: 100%;
+  text-align: center;
   margin-top: 20px;
+  z-index: 1000;
+  position: relative;
+}
+
+div.TitleandPlatform {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+img.spotifyIconCP {
+  /* background: url("../resources/images/Spotify.png"); */
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: 0;
+
+  height: 16px;
+  width: 16px;
+
+  margin-left: 11px;
+  margin-top: 2px;
+}
+
+img.youtubeIconCP {
+  /* background: url("../resources/images/Spotify.png"); */
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: 0;
+
+  height: 16px;
+  width: 21px;
+
+  margin-left: 11px;
+  margin-top: 1px;
 }
 
 #songTitle {

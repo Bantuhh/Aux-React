@@ -15,10 +15,7 @@ import {
   Route,
   Switch,
   Redirect,
-  withRouter,
 } from "react-router-dom";
-
-import { createBrowserHistory } from "history";
 
 // Side Nav imports
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
@@ -33,38 +30,39 @@ import { Auth0Context } from "./react-auth0-spa";
 
 import SpotifyPlayer from "react-spotify-web-playback";
 
+import { SessionContext } from "./session-context";
+
+import YouTube from "react-youtube";
+
 class App extends Component {
   componentDidMount() {
     document.body.style.background = "#252525";
   }
-  state = {
-    currentSong: [],
-    queue: [],
-    spotifyURIQueue: ["spotify:track:2aPTvyE09vUCRwVvj0I8WK"],
-    timeToSkip: true,
-    currentSongsPlatform: "Spotify",
-    spotifyAccessToken: "",
-  };
-
-  popQueue = (queue) => {
-    if (queue.length == 0) {
-      return ["None", []];
-    }
-
-    var currentSong = queue.pop(0);
-
-    return [currentSong, queue];
-  };
-
-  readGlobalQueue = () => {
-    if (global.sessionQueue.length === 0) {
-      return;
-    } else if (global.isContentPlaying) {
-    }
-  };
 
   checkPlayerStatus = (state) => {
     console.log("Player Status: ", state);
+
+    if (state.deviceId != "") {
+      global.spotifyDeviceID = state.deviceId;
+    }
+
+    if ((state.type === "track_update") | (state.type === "player_update")) {
+      this.setState({ sessionQueue: global.sessionQueue });
+    }
+
+    if (
+      (state.type === "player_update") &
+      !state.isPlaying &
+      (global.currentlyPlaying[0] === "Spotify")
+    ) {
+      global.isContentPlaying = false;
+      this.setState({ isContentPlaying: false });
+    }
+
+    if ((state.type === "player_update") & state.isPlaying) {
+      global.isContentPlaying = true;
+      this.setState({ isContentPlaying: true });
+    }
   };
 
   spotifyLogin = () => {
@@ -77,115 +75,154 @@ class App extends Component {
 
   static contextType = Auth0Context;
 
-  getCurrentPageName = () => {
-    console.log(this.props.location.pathname);
-    return this.props.location.pathname;
+  // Set up Context environment
+  updateSessionQueue = (newQueue) => {
+    this.setState({ sessionQueue: newQueue });
+  };
+
+  // YouTube functions
+  loadYTVideo = (videoId) => {
+    this.state.youtubePlayer.loadVideoById(videoId, 0);
+  };
+
+  _onReady = (event) => {
+    // access to player in all event handlers via event.target
+    global.youtubePlayer = event.target;
+    this.setState({ youtubePlayer: event.target });
+  };
+
+  _onVideoEnd = (event) => {
+    global.skipSong();
+    this.updateSessionQueue(global.sessionQueue);
+  };
+
+  state = {
+    sessionQueue: global.sessionQueue,
+    currentlyPlaying: global.currentlyPlaying,
+    isContentPlaying: global.isContentPlaying,
+    updateSessionQueue: this.updateSessionQueue,
+    spotifyAccessToken: global.spotifyAccessToken,
+    youtubePlayer: "",
+    loadYTVideo: this.loadYTVideo,
   };
 
   render() {
-    const {
-      loading,
-      isAuthenticated,
-      loginWithRedirect,
-      logout,
-    } = this.context;
+    const { loading, isAuthenticated } = this.context;
 
-    const history = createBrowserHistory();
+    const opts = {
+      height: "0",
+      width: "0",
+      playerVars: {
+        // https://developers.google.com/youtube/player_parameters
+        autoplay: 0,
+        controls: 1,
+      },
+    };
 
     if (loading) {
       return <div>Loading...</div>;
     }
 
     return (
-      <Router>
-        <Route
-          render={({ location, history }) => (
-            <React.Fragment>
-              {isAuthenticated && (
-                <SideNav
-                  className="sidenav"
-                  onSelect={(selected) => {
-                    const to = "/" + selected;
-                    if (location.pathname !== to) {
-                      history.push(to);
-                    }
-                  }}>
-                  <SideNav.Toggle />
-                  <SideNav.Nav defaultSelected={history.location.pathname}>
-                    <NavItem eventKey="Session">
-                      <NavIcon>
-                        <i
-                          className="fa fa-fw fa-play-circle"
-                          style={{ fontSize: "1.75em" }}
-                        />
-                      </NavIcon>
-                      <NavText>Session</NavText>
-                    </NavItem>
-                    <NavItem eventKey="Search">
-                      <NavIcon>
-                        <i
-                          className="fa fa-fw fa-search"
-                          style={{ fontSize: "1.75em" }}
-                        />
-                      </NavIcon>
-                      <NavText>Search</NavText>
-                    </NavItem>
-                    <NavItem eventKey="Library">
-                      <NavIcon>
-                        <i
-                          className="fa fa-fw fa-book"
-                          style={{ fontSize: "1.75em" }}
-                        />
-                      </NavIcon>
-                      <NavText>Library</NavText>
-                    </NavItem>
+      <SessionContext.Provider value={this.state}>
+        <Router>
+          <Route
+            render={({ location, history }) => (
+              <React.Fragment>
+                {isAuthenticated && (
+                  <SideNav
+                    className="sidenav"
+                    onSelect={(selected) => {
+                      const to = "/" + selected;
+                      if (location.pathname !== to) {
+                        history.push(to);
+                      }
+                    }}>
+                    <SideNav.Toggle />
+                    <SideNav.Nav defaultSelected={history.location.pathname}>
+                      <NavItem eventKey="Session">
+                        <NavIcon>
+                          <i
+                            className="fa fa-fw fa-play-circle"
+                            style={{ fontSize: "1.75em" }}
+                          />
+                        </NavIcon>
+                        <NavText>Session</NavText>
+                      </NavItem>
+                      <NavItem eventKey="Search">
+                        <NavIcon>
+                          <i
+                            className="fa fa-fw fa-search"
+                            style={{ fontSize: "1.75em" }}
+                          />
+                        </NavIcon>
+                        <NavText>Search</NavText>
+                      </NavItem>
+                      <NavItem eventKey="Library">
+                        <NavIcon>
+                          <i
+                            className="fa fa-fw fa-book"
+                            style={{ fontSize: "1.75em" }}
+                          />
+                        </NavIcon>
+                        <NavText>Library</NavText>
+                      </NavItem>
 
-                    <NavItem eventKey="Accounts">
-                      <NavIcon>
-                        <i
-                          className="fa fa-fw fa-spotify"
-                          style={{ fontSize: "1.75em" }}
-                        />
-                      </NavIcon>
-                      <NavText>Music Accounts</NavText>
-                    </NavItem>
-                  </SideNav.Nav>
-                </SideNav>
-              )}
-              {isAuthenticated && (
-                <SpotifyPlayer
-                  token={this.state.spotifyAccessToken}
-                  uris={"spotify:track:2aPTvyE09vUCRwVvj0I8WK"}
-                  play={true}
-                  callback={(state) => this.checkPlayerStatus(state)}
-                />
-              )}
-              <main>
-                <Switch>
-                  <Route exact path="/Session" component={Session} />
-                  <Route exact path="/Search" component={Search} />
-                  <Route exact path="/Library" component={Library} />
-                  {!isAuthenticated && (
-                    <Route exact path="/Welcome" component={Welcome} />
-                  )}
-
-                  <Route
-                    exact
-                    path="/Accounts"
-                    render={(props) => (
-                      <Accounts {...props} spotifyLogin={this.spotifyLogin} />
-                    )}
+                      <NavItem eventKey="Accounts">
+                        <NavIcon>
+                          <i
+                            className="fa fa-fw fa-user-circle"
+                            style={{ fontSize: "1.75em" }}
+                          />
+                        </NavIcon>
+                        <NavText>Music Accounts</NavText>
+                      </NavItem>
+                    </SideNav.Nav>
+                  </SideNav>
+                )}
+                {isAuthenticated && (
+                  <SpotifyPlayer
+                    token={this.state.spotifyAccessToken}
+                    // uris={[]}
+                    // autoPlay={true}
+                    play={true}
+                    callback={(state) => this.checkPlayerStatus(state)}
                   />
-                  <Route exact path="/signUp" component={SignUp} />
-                  <Route exact path="/404" component={NotFoundPage} />
-                  {isAuthenticated && <Redirect to="/Session" />}
-                  {!isAuthenticated && <Redirect to="/Welcome" />}
-                </Switch>
-              </main>
-            </React.Fragment>
-          )}
-        />
-      </Router>
+                )}
+                <YouTube
+                  className="YoutubePlayer"
+                  videoId="7f6K1U6lH5Q"
+                  opts={opts}
+                  onReady={this._onReady}
+                  onEnd={this._onVideoEnd}
+                />
+                <main>
+                  <Switch>
+                    <Route exact path="/Session" component={Session} />
+                    <Route exact path="/Search" component={Search} />
+                    <Route exact path="/Library" component={Library} />
+                    {!isAuthenticated && (
+                      <Route exact path="/Welcome" component={Welcome} />
+                    )}
+
+                    <Route
+                      exact
+                      path="/Accounts"
+                      render={(props) => (
+                        <Accounts {...props} spotifyLogin={this.spotifyLogin} />
+                      )}
+                    />
+                    <Route exact path="/signUp" component={SignUp} />
+                    <Route exact path="/404" component={NotFoundPage} />
+                    {isAuthenticated && <Redirect to="/Session" />}
+                    {!isAuthenticated && <Redirect to="/Welcome" />}
+                  </Switch>
+                </main>
+              </React.Fragment>
+            )}
+          />
+        </Router>
+      </SessionContext.Provider>
     );
   }
 }

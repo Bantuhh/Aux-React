@@ -74,3 +74,17 @@ button.playlistOptions {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
+button.showPlaylist {
+  height: 12%;
+  width: 90%;
+
+  position: absolute;
+
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}

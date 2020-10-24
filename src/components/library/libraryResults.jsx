@@ -23,6 +23,15 @@ class LibraryResults extends Component {
           ? libraryPullResultsArray.map((item) => (
               <LibraryItem
                 songInfo={item}
+                addSongToQueue={() =>
+                  this.props.addSongToQueue(
+                    "Spotify",
+                    Object.assign({}, item).track
+                  )
+                }
+                playSongNow={() =>
+                  this.props.playSongNow(Object.assign({}, item))
+                }
                 showSongOptions={() =>
                   this.props.showSongOptions(Object.assign({}, item))
                 }
