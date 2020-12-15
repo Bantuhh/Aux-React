@@ -33,7 +33,7 @@ class SearchResults extends Component {
                 selectedPlatform={selectedPlatform}
                 vidInfo={item}
                 addSongToQueue={() =>
-                  this.props.addSongToQueue("Youtube", Object.assign({}, item))
+                  this.props.addYTContentToQueue("Youtube", Object.assign({}, item))
                 }
                 playSongNow={() =>
                   this.props.playSongNow(Object.assign({}, item))
@@ -43,7 +43,7 @@ class SearchResults extends Component {
                 }
               />
             ))
-          : trackSearchResultsArray.map((item) => (
+          : (trackSearchResultsArray.length !== 0) ? (trackSearchResultsArray.map((item) => (
               <SearchItem
                 selectedPlatform={selectedPlatform}
                 songInfo={item}
@@ -57,7 +57,14 @@ class SearchResults extends Component {
                   this.props.showContentOptions(Object.assign({}, item))
                 }
               />
-            ))}
+            ))) : <div className="noQueueItemsDiv">
+            <p className="noQueueItemsText">
+              Search for something, eh?
+            </p>
+
+
+
+          </div>}
       </div>
     );
   }

@@ -16,7 +16,7 @@ div.searchMiddle {
   align-content: flex-start;
 
   height: 100%;
-  width: 80%;
+  width: 79%;
 
   border-top: 1px solid #c4c4c4;
   border-left: 1px solid #c4c4c4;
@@ -24,7 +24,7 @@ div.searchMiddle {
 
 div.searchRight {
   height: 100%;
-  width: 20%;
+  width: 21%;
 
   text-align: center;
 

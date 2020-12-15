@@ -62,7 +62,7 @@ class QueueItem extends Component {
           <p className="songArtist">{artist}</p>
         </div>
         <div className="songOptionsDiv">
-          <button className="songOptions"></button>
+          <button className="songOptions" onClick={() => this.props.showContentOptions()}></button>
         </div>
       </div>
     );

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import ReactDOM from 'react-dom'
 
 import "../../styles/SessionController.css";
 
 import { SessionContext } from "../../session-context";
 
-import { play, pause, playURI } from "../../utils/spotifyInterface";
+import { play, pause, playURI, seek } from "../../utils/spotifyInterface";
 import { formatYTTitle } from "../../utils/youtubeInterface";
 
 import { popQueue } from "../../utils/queueInterface";
@@ -12,10 +13,17 @@ import { popQueue } from "../../utils/queueInterface";
 import spotifyIcon from "../../resources/images/Spotify.png";
 import youtubeIcon from "../../resources/images/Youtube.png";
 
+import SeekBar from "./seekbar"
+
+
 class SessionController extends Component {
   state = {
     isPlaying: global.isContentPlaying,
+    isEditingQueue: false,
+    editQueueText: "Edit Queue"
   };
+
+  
 
   playButtonPress = () => {
     if (global.isContentPlaying) {
@@ -35,6 +43,7 @@ class SessionController extends Component {
         global.youtubePlayer.playVideo();
       } else if (global.currentlyPlaying[0] === "Spotify") {
         play(global.spotifyAccessToken);
+
       }
     }
   };
@@ -57,13 +66,19 @@ class SessionController extends Component {
     } else if (upNext[0] === "Youtube") {
       // Pause Spotify if it was playing
       pause(global.spotifyAccessToken);
-      global.youtubePlayer.loadVideoById(upNext[1].id.videoId, 0);
+      global.youtubePlayer.loadVideoById(upNext[1].id, 0);
     }
 
     global.isContentPlaying = true;
     global.currentlyPlaying = upNext;
 
+    // Reset Song Progress Bar
+    global.currentContentPosition = 0;
+
+    // Updates State of Session
     this.context.updateSessionQueue(global.sessionQueue);
+
+
   };
 
   restartPressed = () => {
@@ -71,10 +86,15 @@ class SessionController extends Component {
 
     if (global.currentlyPlaying[0] === "Youtube") {
       global.youtubePlayer.loadVideoById(songInfo.id.videoId, 0);
+      
     } else if (global.currentlyPlaying[1] === "Spotify") {
       const songURI = songInfo["uri"];
       playURI(songURI, global.spotifyAccessToken);
+
     }
+    global.currentContentPosition = 0;
+
+   
   };
 
   formatArtistString = (artistObj) => {
@@ -95,11 +115,128 @@ class SessionController extends Component {
     return artistString;
   };
 
+
+  getCurrentTrackLength = () => {
+    var currTrack = global.currentlyPlaying
+    var trackLength = 0;
+
+    if (currTrack === "") {
+      trackLength = 0;
+    } else if (currTrack[0] === "Spotify") {
+      trackLength = Math.round(currTrack[1].duration_ms / 1000)
+    } else if (currTrack[0] === "Youtube") {
+      var duration = currTrack[1].contentDetails.duration;
+
+      // Parse out hours minutes and seconds from duration string "PT4M15S" "4 Mins, 15 Secs"
+      var hourStr = duration.split("H")[0];
+
+      var minStr = "";
+      var minutes = 0;
+
+      var secStr = "";
+      var seconds = 0;
+
+      if (hourStr === duration) { // Duration does not have Hour
+        minStr = duration.split("M")[0];
+        minStr = minStr.split("T")[1];
+        minutes = parseInt(minStr);
+
+        secStr = duration.split("M")[1];
+        secStr = secStr.split("S")[0];
+        seconds = parseInt(secStr);
+        
+        trackLength = (minutes * 60) + seconds
+
+      } else { // Duration does have Hour
+        hourStr = hourStr.split("T")[1];
+        var hours = parseInt(hourStr);
+
+        minStr = duration.split("M")[0];
+        minStr = minStr.split("H")[1];
+        minutes = parseInt(minStr);
+
+        secStr = duration.split("M")[1];
+        secStr = secStr.split("S")[0];
+        seconds = parseInt(secStr);
+        
+        trackLength = (hours * 60 * 60) + (minutes * 60) + seconds
+      }
+    }
+
+    return trackLength
+  }
+
+  seek = (time) => {
+    if (global.currentlyPlaying !== "") {
+    
+      if (global.currentlyPlaying[0] === "Youtube") {
+        global.currentContentPosition = time;
+        global.youtubePlayer.seekTo(time, true)
+        global.youtubePlayer.playVideo();
+      } else if (global.currentlyPlaying[0] === "Spotify") {
+        global.currentContentPosition = time;
+        // TODO: FINISH SEEK LOGIC HERE
+        
+        seek(time*1000, global.spotifyAccessToken);
+        play(global.spotifyAccessToken)
+      }
+      global.isContentPlaying = true;
+
+      this.context.updateSessionQueue(global.sessionQueue);
+    } else {
+      console.log("Nothing is currently playing.")
+    }
+
+
+  }
+
+  onSlidingStart = () => {
+    console.log("Sliding Start")
+    // Pause content while seeking
+    global.isContentPlaying = false;
+    if (global.currentlyPlaying !== "") {
+    
+      if (global.currentlyPlaying[0] === "Youtube") {
+        global.youtubePlayer.pauseVideo();
+
+      } else if (global.currentlyPlaying[0] === "Spotify") {
+        pause(global.spotifyAccessToken)
+      }
+
+    } 
+    // Updates State of Session
+    this.context.updateSessionQueue(global.sessionQueue);
+  }
+
+  queueButtonClicked = () => {
+    let element = document.getElementById('editQueueButton');
+    
+    if (!this.state.isEditingQueue) {
+      
+      ReactDOM.findDOMNode(element).style.color = "red";
+      // ReactDOM.findDOMNode(element).style.text = "Done Editing";
+    } else {
+      ReactDOM.findDOMNode(element).style.color = "white";
+      // ReactDOM.findDOMNode(element).style.text = "Edit Queue";
+    }
+    
+    this.setState({
+      editQueueText: !this.state.isEditingQueue ? "Done Editing" : "Edit Queue",
+      isEditingQueue: !this.state.isEditingQueue 
+      
+    })
+
+    this.props.editQueue();
+    
+}
+
   render() {
+
     return (
       <SessionContext.Consumer>
         {({ isContentPlaying }) => (
           <div className="controllerDiv">
+
             <img
               className="currentTrackPic"
               src={
@@ -157,6 +294,16 @@ class SessionController extends Component {
                   : this.formatArtistString(global.currentlyPlaying[1].artists)}
               </p>
             </div>
+            <div className="seekbarDiv">
+
+              <SeekBar
+                onSeek={this.seek.bind(this)}
+                trackLength={this.getCurrentTrackLength()}
+                onSlidingStart={() => this.onSlidingStart()} 
+                currentPosition={Math.trunc(global.currentContentPosition)} />
+            </div>
+            <p className="upNextText">Up Next:</p>
+            <button className="editQueueButton" id="editQueueButton" onClick={this.queueButtonClicked}>{this.state.editQueueText}</button>
           </div>
         )}
       </SessionContext.Consumer>

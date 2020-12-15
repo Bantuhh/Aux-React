@@ -57,11 +57,13 @@ global.skipSong = () => {
     var songURI = upNext[1]["uri"];
 
     playURI(songURI, global.spotifyAccessToken);
+
   } else if (upNext[0] === "Youtube") {
     console.log(global.youtubePlayer);
-    global.youtubePlayer.loadVideoById(upNext[1].id.videoId, 0);
+    global.youtubePlayer.loadVideoById(upNext[1].id, 0);
   }
 
+  global.currentContentPosition = 0;
   global.isContentPlaying = true;
   global.currentlyPlaying = upNext;
 };
@@ -69,3 +71,11 @@ global.skipSong = () => {
 global.youtubeSearchResults = [];
 
 global.youtubePlayer = "";
+
+global.currentContentPosition = 0;
+
+global.timerStarted = false;
+
+// For drag and drop queue
+global.draggedQueueItemIndex = '';
+global.draggedOntoQueueItemIndex = '';

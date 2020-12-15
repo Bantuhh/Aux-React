@@ -25,6 +25,8 @@ const spotifyWebApi = new Spotify();
 
 const YOUTUBE_API_KEY = "AIzaSyB3FeQ_UyFnXjkDV9V62tca3eLs4D0NQjQ";
 
+var axios = require('axios');
+
 class SearchWeb extends Component {
   state = {
     trackSearchResults: global.spotifyTrackSearchResults,
@@ -124,12 +126,15 @@ class SearchWeb extends Component {
     if (this.state.selectedPlatform === "Youtube") {
       //Implement logic of playing youtube content immediately
       pause(global.spotifyAccessToken);
-      this.context.loadYTVideo(songInfo.id.videoId);
+      this.context.loadYTVideo(songInfo.id);
     } else {
       const songURI = songInfo["uri"];
       global.youtubePlayer.pauseVideo();
       playURI(songURI, global.spotifyAccessToken);
     }
+
+    // Reset Song Progress Bar
+    global.currentContentPosition = 0;
 
     global.isContentPlaying = true;
 
@@ -158,6 +163,30 @@ class SearchWeb extends Component {
   };
 
   // Youtube API
+
+  getYTContentDetails = (options, callback) => {
+    var ROOT_URL = 'https://www.googleapis.com/youtube/v3/videos';
+    
+    if (!options.key) {
+      throw new Error('Youtube Search expected key, received undefined');
+    }
+
+    var params = {
+      part: 'snippet,contentDetails',
+      id: options.id,
+      key: options.key,
+      
+    };
+
+    axios.get(ROOT_URL, { params: params })
+      .then(function(response) {
+        if (callback) { callback(response.data.items); }
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
+  };
+
   youtubeSearch = () => {
     var query = document.getElementById("searchQuery").value;
 
@@ -170,15 +199,36 @@ class SearchWeb extends Component {
       //do something with videos!
       console.log(videos);
 
-      this.setState({
-        selectedPlatform: "Youtube",
-        youtubeSearchResults: videos,
-        songOptionsSelected: false,
-        youtubeSearch: true,
-        spotifySearch: false,
+      var idString = "";
+      for (var x = 0; x < videos.length; x++) {
+        console.log(videos[x]);
+
+        if (idString === "") {
+          idString = videos[x].id.videoId;
+
+        } else {
+          idString = idString + "," + videos[x].id.videoId;
+        }
+      }
+
+      console.log(idString)
+
+      this.getYTContentDetails({ key: YOUTUBE_API_KEY, id: idString }, (videos) => {
+        //do something with videos!
+        console.log(videos);
+  
+        this.setState({
+          selectedPlatform: "Youtube",
+          youtubeSearchResults: videos,
+          songOptionsSelected: false,
+          youtubeSearch: true,
+          spotifySearch: false,
+        });
       });
     });
   };
+
+  
 
   addYTContentToQueue = (platform, songInfo) => {
     console.log("addYTContentToQueue");
@@ -195,7 +245,7 @@ class SearchWeb extends Component {
       if (currentSong !== "None") {
         // Check the platform of the song
         if (currentSong[0] === "Youtube") {
-          this.context.loadYTVideo(songInfo.id.videoId);
+          this.context.loadYTVideo(songInfo.id);
 
           global.isContentPlaying = true;
 
@@ -250,6 +300,7 @@ class SearchWeb extends Component {
             youtubeSearchResults={this.state.youtubeSearchResults}
             playSongNow={this.playSongNow}
             showContentOptions={this.showContentOptions}
+            addYTContentToQueue={this.addYTContentToQueue}
             addSongToQueue={this.addSongToQueue}
             selectedPlatform={this.state.selectedPlatform}></SearchResults>
           <NotificationContainer />

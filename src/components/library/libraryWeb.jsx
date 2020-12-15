@@ -72,10 +72,32 @@ class LibraryWeb extends Component {
 
     spotifyWebApi.getMySavedTracks({ limit: 50 }).then(
       (response) => {
+        console.log(response.items);
         this.setState({
           spotifyFavoritesResults: response.items,
         });
         global.spotifyFavoritesResults = response.items;
+      },
+      (reason) => {
+        console.log("GOT TO ERROR");
+        console.error(reason); // Error!
+      }
+    );
+
+    // Get next 50 favorites as well
+    spotifyWebApi.getMySavedTracks({ offset: 50, limit: 50 }).then(
+      (response) => {
+        var newResults = this.state.spotifyFavoritesResults;
+        var newKey = 50;
+        for (var key in response.items) {
+          newResults[newKey] = response.items[key]
+          newKey += 1;
+        }
+        this.setState({
+          spotifyFavoritesResults: newResults,
+        });
+        global.spotifyFavoritesResults = newResults;
+        console.log(newResults);
       },
       (reason) => {
         console.log("GOT TO ERROR");
@@ -193,6 +215,9 @@ class LibraryWeb extends Component {
     global.youtubePlayer.pauseVideo();
 
     playURI(songURI, global.spotifyAccessToken);
+
+    // Reset Song Progress Bar
+    global.currentContentPosition = 0;
 
     global.isContentPlaying = true;
 
@@ -314,6 +339,7 @@ class LibraryWeb extends Component {
               selectedTab={"Favorites"}
               showPlaylist={this.showPlaylist}
               showSongOptions={this.showSongOptions}
+              addSongToQueue={this.addSongToQueue}
               playSongNow={this.playSongNow}
               libraryPullResults={
                 this.state.selectedPlaylistTracksInfo

@@ -244,3 +244,18 @@ function getPlaybackState(token) {
   });
 }
 exports.getPlaybackState = getPlaybackState;
+
+function seek(position, token) {
+  return __awaiter(this, void 0, void 0, function () {
+      return __generator(this, function (_a) {
+          return [2, fetch("https://api.spotify.com/v1/me/player/seek?position_ms=" + position, {
+                  headers: {
+                      Authorization: "Bearer " + token,
+                      'Content-Type': 'application/json',
+                  },
+                  method: 'PUT',
+              })];
+      });
+  });
+}
+exports.seek = seek;

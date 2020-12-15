@@ -17,6 +17,13 @@ import {
   Redirect,
 } from "react-router-dom";
 
+// Import Notifications
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
+
 // Side Nav imports
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 
@@ -24,6 +31,9 @@ import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 
 import "font-awesome/css/font-awesome.min.css";
+
+import { DndProvider } from 'react-dnd-multi-backend';
+import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 
 // Import Auth0Context instead of useAuth0
 import { Auth0Context } from "./react-auth0-spa";
@@ -38,6 +48,40 @@ class App extends Component {
   componentDidMount() {
     document.body.style.background = "#252525";
   }
+
+  createNotification = (type) => {
+    console.log("GOT TO CREATE NOTIFICATION");
+    switch (type) {
+      case "info":
+        NotificationManager.info("Info message");
+        break;
+      case "success":
+        NotificationManager.success(
+          "I knew you could do it.",
+          "Song added to queue",
+          1500
+        );
+        break;
+      case "warning":
+        NotificationManager.warning(
+          "Warning message",
+          "Close after 3000ms",
+          3000
+        );
+        break;
+      case "error":
+        NotificationManager.error(
+          "Make sure you are logged into your Spotify.",
+          "Error!",
+          5000,
+          () => {
+            //alert("callback");
+          }
+        );
+        break;
+    }
+    return () => {};
+  };
 
   checkPlayerStatus = (state) => {
     console.log("Player Status: ", state);
@@ -63,7 +107,40 @@ class App extends Component {
       global.isContentPlaying = true;
       this.setState({ isContentPlaying: true });
     }
+
+    if (state.errorType === "authentication_error") {
+      this.createNotification("error");
+    }
+
+    if (state.isPlaying & state.position === 0) {
+      global.currentContentPosition = 0;
+      this.setState({ isContentPlaying: true });
+    }
+
+    
   };
+
+  timer = null;
+
+  durationCounter = () => {
+
+    this.timer = setInterval(async () => {
+      if (global.isContentPlaying) {  
+          
+          console.log(global.currentContentPosition);
+          this.setState({ currentContentPosition: global.currentContentPosition, isContentPlaying: true });
+          global.currentContentPosition += 1;
+          
+          
+      }
+      
+    }, 1000);
+  };
+
+  startTimer = () => {
+    console.log("starting duration timer" )
+    this.durationCounter();
+  }
 
   spotifyLogin = () => {
     console.log("spotifyAccessToken", global.spotifyAccessToken);
@@ -92,6 +169,7 @@ class App extends Component {
   };
 
   _onVideoEnd = (event) => {
+    global.isContentPlaying = false;
     global.skipSong();
     this.updateSessionQueue(global.sessionQueue);
   };
@@ -104,6 +182,7 @@ class App extends Component {
     spotifyAccessToken: global.spotifyAccessToken,
     youtubePlayer: "",
     loadYTVideo: this.loadYTVideo,
+    currentContentPosition: global.currentContentPosition
   };
 
   render() {
@@ -123,7 +202,13 @@ class App extends Component {
       return <div>Loading...</div>;
     }
 
+    if (!global.timerStarted) {
+      this.startTimer();
+      global.timerStarted = true;
+    }
+
     return (
+      <DndProvider options={HTML5toTouch}>
       <SessionContext.Provider value={this.state}>
         <Router>
           <Route
@@ -196,6 +281,7 @@ class App extends Component {
                   onReady={this._onReady}
                   onEnd={this._onVideoEnd}
                 />
+                <NotificationContainer />
                 <main>
                   <Switch>
                     <Route exact path="/Session" component={Session} />
@@ -223,6 +309,7 @@ class App extends Component {
           />
         </Router>
       </SessionContext.Provider>
+      </DndProvider>
     );
   }
 }

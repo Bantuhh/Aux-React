@@ -16,7 +16,15 @@ div.sessionMiddle {
   align-content: flex-start;
 
   height: 100%;
-  width: 75%;
+  width: 79%;
+
+  border-top: 1px solid #c4c4c4;
+  border-left: 1px solid #c4c4c4;
+}
+
+div.sessionRightContainer {
+  height: 100%;
+  width: 21%;
 
   border-top: 1px solid #c4c4c4;
   border-left: 1px solid #c4c4c4;
@@ -24,10 +32,9 @@ div.sessionMiddle {
 
 div.sessionRight {
   height: 100%;
-  width: 25%;
+  width: 100%;
 
-  border-top: 1px solid #c4c4c4;
-  border-left: 1px solid #c4c4c4;
+  text-align: center;
 }
 
 .__1v1a1mw {

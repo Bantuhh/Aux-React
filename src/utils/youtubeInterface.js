@@ -1,7 +1,8 @@
 // Youtube Actions
 
 function viewOnYoutube(contentInfo) {
-  let url = "https://www.youtube.com/watch?v=" + contentInfo.id.videoId;
+  console.log(contentInfo);
+  let url = "https://www.youtube.com/watch?v=" + contentInfo.id;
 
   var win = window.open(url, "_blank");
   win.focus();

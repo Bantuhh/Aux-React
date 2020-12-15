@@ -55,11 +55,15 @@ p.songOptionsTitle {
 
   margin-top: 20px;
   margin-bottom: 0px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 p.songOptionsArtist {
   margin-top: 8px;
   margin-bottom: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
   position: relative;
 
   font-family: "Raleway", sans-serif;
@@ -133,7 +137,7 @@ div.libraryQueryDiv {
 }
 
 div.playlistHeaderDiv {
-  height: 31%;
+  height: 35%;
   width: 100%;
   position: relative;
   margin: auto;
@@ -143,15 +147,16 @@ div.playlistHeaderInfoDiv {
   position: relative;
   margin: auto;
   width: 50%;
+  height: 100%;
 
   text-align: center;
 }
 
 #playlistHeaderImg {
-  height: 75%;
-  width: 90px;
+  height: 45%;
+  width: auto;
 
-  margin-bottom: 15px;
+  margin-bottom: 0px;
   margin-top: 50px;
   margin-left: 0px;
 
@@ -169,7 +174,7 @@ p.playlistHeaderTitle {
 
   color: #ffffff;
 
-  top: 31%;
+  top: 6%;
 }
 
 p.numTracksHeader {
@@ -182,6 +187,8 @@ p.numTracksHeader {
   font-size: min(1vw, 11px);
 
   color: #ffffff;
+
+  top: 7%;
 }
 
 #backToLibraryBtn {

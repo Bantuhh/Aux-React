@@ -3,8 +3,9 @@ div.queueDiv {
   flex-wrap: wrap;
   align-content: flex-start;
   overflow-y: auto;
+  position: relative;
 
-  height: 68%;
+  height: 65%;
   width: 100%;
 }
 
@@ -28,3 +29,18 @@ div.noQueueItemsDiv {
   height: 100%;
   width: 100%;
 }
+
+/* button.editQueueButton {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: min(1.1vw, 12px);
+  color: #ffffff;
+  background-color: transparent;
+
+  position: absolute;
+  right: 15px;
+  top: -25px;
+
+  z-index: 100;
+} */
