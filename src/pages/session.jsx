@@ -11,25 +11,28 @@ class Session extends Component {
   render() {
     return (
       <div class="session">
-        <NavBar></NavBar>
+        
 
-        <MediaQuery query="(min-device-width: 1224px)">
-          <MediaQuery query="(min-width: 1225px)">
+        <MediaQuery query="(min-device-width: 1025px)">
+        <NavBar></NavBar>
+        <SessionWeb></SessionWeb>
+          {/* <MediaQuery query="(min-width: 1225px)">
             <SessionWeb></SessionWeb>
           </MediaQuery>
           <MediaQuery query="(max-width: 1224px)">
             <SessionWeb></SessionWeb>
-          </MediaQuery>
+          </MediaQuery> */}
         </MediaQuery>
 
-        <MediaQuery query="(max-device-width: 1224px)">
-          <MediaQuery query="(min-device-width: 1024px)">
+        <MediaQuery query="(max-device-width: 1024px)">
+        <SessionMobile></SessionMobile>
+          {/* <MediaQuery query="(min-device-width: 1024px)">
             <SessionMobile></SessionMobile>
           </MediaQuery>
 
           <MediaQuery query="(max-device-width: 1023px)">
             <SessionMobile></SessionMobile>
-          </MediaQuery>
+          </MediaQuery> */}
         </MediaQuery>
 
         {/* <Link styles={{ margin_top: "200px" }} to="/signUp">

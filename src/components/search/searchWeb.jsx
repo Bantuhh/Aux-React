@@ -3,13 +3,13 @@ import { SessionContext } from "../../session-context";
 
 import { addSongToQueue } from "../../utils/queueInterface";
 
-import { viewOnSpotify, playURI, pause } from "../../utils/spotifyInterface";
+import { viewOnSpotify, formatArtistString, playURI, pause } from "../../utils/spotifyInterface";
 
 import { viewOnYoutube } from "../../utils/youtubeInterface";
 
 import YTSearch from "youtube-api-search";
 
-import "../../styles/SearchWeb.css";
+import "./Search.css";
 import {
   NotificationContainer,
   NotificationManager,
@@ -69,6 +69,9 @@ class SearchWeb extends Component {
             //alert("callback");
           }
         );
+        break;
+      default:
+        console.log("Not a known notification")
         break;
     }
     return () => {};
@@ -142,24 +145,6 @@ class SearchWeb extends Component {
     global.currentlyPlaying = [this.state.selectedPlatform, songInfo];
 
     this.context.updateSessionQueue(global.sessionQueue);
-  };
-
-  formatArtistString = (artistObj) => {
-    var artistString = "";
-    var numArtists = 0;
-
-    for (var key in Object.keys(artistObj)) {
-      var artist = artistObj[key];
-
-      if (numArtists > 0) {
-        artistString = artistString + ", " + artist.name;
-      } else {
-        artistString = artist.name;
-      }
-      numArtists += 1;
-    }
-
-    return artistString;
   };
 
   // Youtube API
@@ -319,7 +304,7 @@ class SearchWeb extends Component {
                 {this.state.selectedContentInfo.name}
               </p>
               <p className="songOptionsArtist">
-                {this.formatArtistString(
+                {formatArtistString(
                   this.state.selectedContentInfo.artists
                 )}
               </p>

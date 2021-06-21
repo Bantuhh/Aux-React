@@ -3,9 +3,9 @@ import { SessionContext } from "../../session-context";
 
 import { addSongToQueue, addPlaylistToQueue } from "../../utils/queueInterface";
 
-import { viewOnSpotify, playURI } from "../../utils/spotifyInterface";
+import { viewOnSpotify, playURI, formatArtistString } from "../../utils/spotifyInterface";
 
-import "../../styles/LibraryWeb.css";
+import "./Library.css";
 import {
   NotificationContainer,
   NotificationManager,
@@ -60,6 +60,9 @@ class LibraryWeb extends Component {
             //alert("callback");
           }
         );
+        break;
+      default:
+        console.log("Not a known notification")
         break;
     }
     return () => {};
@@ -169,7 +172,7 @@ class LibraryWeb extends Component {
     console.log(playlistInfo);
 
     var div = document.getElementsByClassName("libraryDiv")[0];
-    div.style.height = "69%";
+    div.style.height = "65%";
 
     this.getPlaylistTracks(playlistInfo.id);
 
@@ -177,16 +180,20 @@ class LibraryWeb extends Component {
       playlistSelected: true,
       selectedPlaylistInfo: playlistInfo,
     });
+
+    
   };
 
   backToLibraryFromPlaylist = () => {
-    var div = document.getElementsByClassName("libraryDiv")[0];
-    div.style.height = "78%";
+    
 
     this.setState({
       playlistSelected: false,
       selectedTab: "Playlists",
     });
+
+    var div = document.getElementsByClassName("libraryDiv")[0];
+    div.style.height = "80%";
   };
 
   showSongOptions = (songInfo) => {
@@ -239,24 +246,6 @@ class LibraryWeb extends Component {
     this.createNotification("success");
   };
 
-  formatArtistString = (artistObj) => {
-    var artistString = "";
-    var numArtists = 0;
-
-    for (var key in Object.keys(artistObj)) {
-      var artist = artistObj[key];
-
-      if (numArtists > 0) {
-        artistString = artistString + ", " + artist.name;
-      } else {
-        artistString = artist.name;
-      }
-      numArtists += 1;
-    }
-
-    return artistString;
-  };
-
   render() {
     return (
       <div className="libraryFlex">
@@ -266,7 +255,7 @@ class LibraryWeb extends Component {
             <div className="libraryQueryDiv">
               <div className="libraryTabDiv">
                 <button
-                  class={
+                  className={
                     this.state.selectedTab === "Favorites"
                       ? "tablinks active"
                       : "tablinks"
@@ -276,7 +265,7 @@ class LibraryWeb extends Component {
                   Favorites
                 </button>
                 <button
-                  class={
+                  className={
                     this.state.selectedTab === "Playlists"
                       ? "tablinks active"
                       : "tablinks"
@@ -300,6 +289,7 @@ class LibraryWeb extends Component {
             <LibraryResults
               selectedTab={this.state.selectedTab}
               showPlaylist={this.showPlaylist}
+              showingPlaylistContent={this.state.playlistSelected}
               showSongOptions={this.showSongOptions}
               playSongNow={this.playSongNow}
               addSongToQueue={this.addSongToQueue}
@@ -338,6 +328,7 @@ class LibraryWeb extends Component {
             <LibraryResults
               selectedTab={"Favorites"}
               showPlaylist={this.showPlaylist}
+              showingPlaylistContent={this.state.playlistSelected}
               showSongOptions={this.showSongOptions}
               addSongToQueue={this.addSongToQueue}
               playSongNow={this.playSongNow}
@@ -360,7 +351,7 @@ class LibraryWeb extends Component {
               {this.state.selectedSongInfo.name}
             </p>
             <p className="songOptionsArtist">
-              {this.formatArtistString(this.state.selectedSongInfo.artists)}
+              {formatArtistString(this.state.selectedSongInfo.artists)}
             </p>
             <div id="firstSeparatorLine"></div>
             <button
@@ -418,5 +409,6 @@ class LibraryWeb extends Component {
 }
 
 LibraryWeb.contextType = SessionContext;
+
 
 export default LibraryWeb;

@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:700&display=swap");
+
+@import url("https://fonts.googleapis.com/css?family=Raleway:500&display=swap");
+
+div.searchItemDiv {
+  display: flex;
+  align-content: flex-start;
+
+  width: 100%;
+  height: 9vh;
+
+  border-bottom: 1px solid #c4c4c4;
+}
+
+div.searchItemDivInner {
+  display: flex;
+  align-content: flex-start;
+
+  width: 100%;
+  height: 100%;
+}
+
+div.songOptionsDiv {
+  margin-right: 4%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button.songOptions {
+  background: url("../../resources/images/Options.png");
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: none;
+
+  height: 5vh;
+  width: 5vh;
+  margin: auto;
+
+  position: relative;
+}
+
+button.playNow {
+  height: 12%;
+  width: 70%;
+
+  position: absolute;
+
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}

@@ -1,12 +1,11 @@
 import {
-  viewOnSpotify,
-  queueSpotifySong,
-  skipSongSpotify,
   playURI,
 } from "./spotifyInterface";
 
 import Spotify from "spotify-web-api-js";
 const spotifyWebApi = new Spotify();
+
+
 
 export function addSongToQueue(platform, songInfo) {
   console.log("AddSongToQueue");
@@ -92,7 +91,7 @@ export function addPlaylistToQueue(platform, playlistInfo) {
     },
     (reason) => {
       console.log("GOT TO ERROR (getPlaylistTracks)");
-      this.createNotification("error");
+      // this.createNotification("error");
       console.error(reason); // Error!
     }
   );

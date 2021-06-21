@@ -1,13 +1,21 @@
 import React, { Component } from "react";
 
-import "../../styles/libraryItem.css";
+import "./libraryItem.css";
+
+import albumPlaceholderImg from "../../resources/images/AlbumImgPlaceholder.png";
 
 class LibraryItem extends Component {
   state = {};
   render() {
     var { songInfo } = this.props;
     songInfo = songInfo.track;
-    const albumImgPath = songInfo.album.images[2].url;
+
+    var albumImgPath = ''
+    if (songInfo.album.images.length === 0) {
+      albumImgPath = albumPlaceholderImg
+    } else {
+      albumImgPath = songInfo.album.images[2].url;
+    } 
 
     var artistString = "";
     var numArtists = 0;

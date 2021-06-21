@@ -2,12 +2,14 @@ import React, { Component } from "react";
 
 import { SessionContext } from "../../session-context";
 
-import "../../styles/SessionQueue.css";
+import { TouchBackend } from 'react-dnd-touch-backend'
+import { DndProvider } from 'react-dnd'
+
+import "./SessionQueue.css";
 
 import QueueItem from "./queueItem";
 
-import EditingQueueItem from "./editingQueueItem";
-
+import {EditingQueueItem , EditingQueueItemTouchable} from "./editingQueueItem";
 
 class SessionQueue extends Component {
   state = {
@@ -49,22 +51,27 @@ class SessionQueue extends Component {
     return (
       <SessionContext.Consumer>
         {({ sessionQueue }) => (
-          <div className="queueDiv" onDrop={this.onDrop}>
-            
-            {global.sessionQueue.length === 0 ? (
-              <div className="noQueueItemsDiv">
-                <p className="noQueueItemsText">
-                  Add some songs to the queue, eh?
-                </p>
+          <DndProvider backend={TouchBackend}>
+            <div id={this.props.deviceType === "Web" ? "queueDivWeb" : "queueDivMobile"} onDrop={this.onDrop}>
+              
+              {global.sessionQueue.length === 0 ? (
+                <div className="noQueueItemsDiv">
+                  <p className="noQueueItemsText">
+                    Add some songs to the queue, eh?
+                  </p>
+    
   
- 
 
-              </div>
-            ) : this.props.isEditingQueue ? (
-              global.sessionQueue.map((item) => <EditingQueueItem songInfo={item} removeSong={() => this.removeSong(item)}/>)) : (
-              global.sessionQueue.map((item) => <QueueItem songInfo={item} showContentOptions={() => this.props.showContentOptions(item)} />)
-            )}
-          </div>
+                </div>
+              ) : this.props.isEditingQueue ? (
+                this.props.deviceType === "Web" ? 
+                (global.sessionQueue.map((item) => <EditingQueueItem deviceType={this.props.deviceType} songInfo={item} removeSong={() => this.removeSong(item)}/>)): 
+                (global.sessionQueue.map((item) => <EditingQueueItemTouchable deviceType={this.props.deviceType} songInfo={item} removeSong={() => this.removeSong(item)} onDrop={this.onDrop}/>))
+                ) : (
+                global.sessionQueue.map((item) => <QueueItem deviceType={this.props.deviceType} songInfo={item} showContentOptions={() => this.props.showContentOptions(item)} />)
+              )}
+            </div>
+          </DndProvider>
         )}
       </SessionContext.Consumer>
     );

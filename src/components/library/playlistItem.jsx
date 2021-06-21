@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "../../styles/PlaylistItem.css";
+import "./PlaylistItem.css";
 
 import {
   NotificationContainer,
@@ -38,6 +38,9 @@ class PlaylistItem extends Component {
             //alert("callback");
           }
         );
+        break;
+      default:
+        console.log("Not a known notification")
         break;
     }
     return () => {};

@@ -1,33 +1,19 @@
 import React, { Component } from "react";
 
-import "../../styles/queueItem.css";
+import "./queueItem.css";
 
 import { formatYTTitle } from "../../utils/youtubeInterface";
+
+import { formatArtistString } from "../../utils/spotifyInterface";
+
+import { useDrag, useDrop } from "react-dnd";
 
 import spotifyIcon from "../../resources/images/Spotify.png";
 import youtubeIcon from "../../resources/images/Youtube.png";
 import reorderIcon from "../../resources/images/ReorderIcon.png"
 
-class EditingQueueItem extends Component {
+export class EditingQueueItem extends Component {
   state = {};
-
-  formatArtistString = (artistObj) => {
-    var artistString = "";
-    var numArtists = 0;
-
-    for (var key in Object.keys(artistObj)) {
-      var artist = artistObj[key];
-
-      if (numArtists > 0) {
-        artistString = artistString + ", " + artist.name;
-      } else {
-        artistString = artist.name;
-      }
-      numArtists += 1;
-    }
-
-    return artistString;
-  };
 
   onDragOver = (e, songInfo) => {
     // console.log(e)
@@ -60,14 +46,14 @@ class EditingQueueItem extends Component {
     } else if (platform === "Spotify") {
       contentImgPath = trackInfo.album.images[0].url;
       title = trackInfo.name;
-      artist = this.formatArtistString(trackInfo.artists);
+      artist = formatArtistString(trackInfo.artists);
     }
 
     return (
       <div className="queueItemDiv" draggable={true} onDragOver={(e) => this.onDragOver(e, songInfo)} onDragStart={(e) => this.onDragStart(e, songInfo)}>
         <img className="albumImg" src={contentImgPath} alt=""></img>
         <div className="songInfoDiv">
-          <div className="titleAndIcon">
+          <div className={platform === "Youtube" ? "titleAndIconYT" : 'titleAndIconSpotify'}>
             <p className="songTitle">{title}</p>
             {platform === "Youtube" ? (
               <img src={youtubeIcon} alt="" className="youtubeIcon"></img>
@@ -88,4 +74,78 @@ class EditingQueueItem extends Component {
   }
 }
 
-export default EditingQueueItem;
+export const EditingQueueItemTouchable = (props) => {
+
+  const { songInfo } = props;
+  const platform = songInfo[0];
+  const trackInfo = songInfo[1];
+
+  var contentImgPath = "";
+  var title = "";
+  var artist = "";
+
+  if (platform === "Youtube") {
+    contentImgPath = trackInfo.snippet.thumbnails.default.url;
+    title = formatYTTitle(trackInfo.snippet.title);
+    artist = trackInfo.snippet.channelTitle;
+  } else if (platform === "Spotify") {
+    contentImgPath = trackInfo.album.images[0].url;
+    title = trackInfo.name;
+    artist = formatArtistString(trackInfo.artists);
+  }
+
+  // var nothingDragging = true;
+
+  const[{ isDragging }, drag] = useDrag({
+    item: { name: 'Any custom name', type: 'Queue Item'},
+    end: (item, monitor) => {
+      var index = global.sessionQueue.indexOf(songInfo);
+      global.draggedQueueItemIndex = index;
+      console.log('onDragStart, index:', index);  
+
+      props.onDrop()
+      // return {somethingDragging: false};
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+      
+    }),
+  });
+
+  const opacity = isDragging ? 0.4 : 1;
+
+  const [, drop] = useDrop({
+    accept: 'Queue Item',
+    drop: () => {
+      var index = global.sessionQueue.indexOf(songInfo);
+      global.draggedOntoQueueItemIndex = index;
+      console.log('onDragOver, index:', index);  
+    },
+    collect: (monitor) => {
+      
+    }
+  });
+
+  return (
+      <div className="queueItemDiv" ref={drop} style={{ opacity }} >
+        <img className="albumImg" src={contentImgPath} alt=""></img>
+        <div className="songInfoDiv">
+          <div className={platform === "Youtube" ? "titleAndIconYT" : 'titleAndIconSpotify'}>
+            <p className="songTitle">{title}</p>
+            {platform === "Youtube" ? (
+              <img src={youtubeIcon} alt="" className="youtubeIcon"></img>
+            ) : (
+              <img src={spotifyIcon} alt="" className="spotifyIcon"></img>
+            )}
+          </div>
+          <p className="songArtist">{artist}</p>
+        </div>
+        <div className="reorderIconDiv" ref={drag}>
+            <img src={reorderIcon} alt="" className="reorderIcon"></img>
+        </div>
+        <div className="removeSongDiv">
+          <button className="removeSong" onClick={() => props.removeSong()}></button>
+        </div>
+      </div>
+  );
+}

@@ -1,0 +1,48 @@
+#NavBarContainer {
+  position: absolute;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  bottom: 0px;
+
+  background: #ea711a;
+}
+
+#innerNavDiv {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 85%;
+  /* min-width: 320px; */
+  margin: auto;
+}
+
+#TabDivider {
+  height: 70%;
+  width: 1px;
+  border-left: 1px solid #c4c4c4;
+  margin: auto;
+  opacity: 60%;
+}
+
+#TabIcon {
+  margin-bottom: 0.9vh !important;
+}
+
+#TabText {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.6vh;
+  margin-bottom: unset !important;
+}
+
+#Tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 25%;
+  height: 100%;
+}

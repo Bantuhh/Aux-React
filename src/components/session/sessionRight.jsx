@@ -40,6 +40,9 @@ class SessionRight extends Component {
               }
             );
             break;
+          default:
+            console.log("Not a known notification")
+            break;
         }
         return () => {};
       };
@@ -103,7 +106,8 @@ class SessionRight extends Component {
                   onClick={(selectedPlatform === "Spotify") ? () =>
                     viewOnSpotify(selectedContentInfo) : () =>
                     viewOnYoutube(selectedContentInfo)
-                  }></button>
+                  }
+                  ></button>
               </div>
               ) : (
               <div className="sessionRight"></div>

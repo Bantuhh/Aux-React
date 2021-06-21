@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "../../styles/SearchResults.css";
+import "./SearchResults.css";
 
 import SearchItem from "./searchItem";
 
@@ -57,7 +57,7 @@ class SearchResults extends Component {
                   this.props.showContentOptions(Object.assign({}, item))
                 }
               />
-            ))) : <div className="noQueueItemsDiv">
+            ))) : <div className="noQueueItemsDivSearch">
             <p className="noQueueItemsText">
               Search for something, eh?
             </p>

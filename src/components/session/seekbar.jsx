@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import {
   View,
   Text,
   StyleSheet,
-  Image,
-  TouchableOpacity,
 } from 'react-native';
 
 
@@ -80,7 +78,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'rgba(255, 255, 255, 0.72)',
-    fontSize: 11,
+    fontSize: 'min(1.5vh, 12px)',
     fontFamily: "Roboto",
     fontStyle: 'medium',
     textAlign:'center',

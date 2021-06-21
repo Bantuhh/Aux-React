@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:700&display=swap");
+
+div.accountsDivMobile {
+  width: 100vw;
+  height: 100vh;
+
+  margin-top: 36px;
+
+  text-align: center;
+}
+
+div.spotifyBoxMobile {
+  position: relative;
+  width: 88%;
+  height: 31%;
+
+  border: 1px solid #c4c4c4;
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img.userImageMobile {
+  height: 6vh;
+  width: auto;
+  margin-left: 0px;
+}
+
+#spotifyLogoMobile {
+  height: 2vh;
+  top: -2px;
+  margin-left: 10%;
+  position: relative;
+}
+
+#spotifyHeaderMobile {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.4vh;
+
+  color: white;
+}
+
+div.spotifyHeaderAndLogoDiv {
+  left: 10px;
+  top: -2.7vh;
+
+  position: absolute;
+
+  display: flex;
+  flex-direction: row;
+}
+
+#loginButtonMobile {
+  width: 65vw;
+  height: 5vh;
+
+  background: #1db954;
+  border-radius: 7px;
+
+  border: none;
+
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.6vh;
+
+  color: white;
+}
+
+#loggedInMobile {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.3vh;
+
+  margin-bottom: 3px;
+  left: 0px;
+}
+
+#loggedInDivMobile {
+  position: relative;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+#loggedInTextMobile {
+  position: relative;
+  margin: auto;
+  width: fit-content;
+  margin-left: 5vw;
+
+  text-align: left;
+}
+
+#loggedInHeaderMobile {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.5vh;
+
+  margin-bottom: 5px;
+  left: 0px;
+}
+
+#loggedInLine {
+  width: 100%;
+  height: 0px;
+
+  border-top: 1px solid #c4c4c4;
+
+  margin-bottom: 10px;
+}
+
+#logoutButtonMobile {
+  /* width: 189.21px;
+  height: 37.53px; */
+  width: 55%;
+  height: 4.8vh;
+  max-height: 50px;
+
+  border: 1px solid #1db954;
+  box-sizing: border-box;
+  border-radius: 7px;
+
+  background: none;
+
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.5vh;
+
+  color: white;
+
+  margin-top: 8%;
+  float: right;
+}

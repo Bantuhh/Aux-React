@@ -259,3 +259,23 @@ function seek(position, token) {
   });
 }
 exports.seek = seek;
+
+// Formats Artist String
+function formatArtistString(artistObj) {
+  var artistString = "";
+  var numArtists = 0;
+
+  for (var key in Object.keys(artistObj)) {
+    var artist = artistObj[key];
+
+    if (numArtists > 0) {
+      artistString = artistString + ", " + artist.name;
+    } else {
+      artistString = artist.name;
+    }
+    numArtists += 1;
+  }
+
+  return artistString;
+};
+exports.formatArtistString = formatArtistString

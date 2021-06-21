@@ -13,21 +13,22 @@ class Home extends Component {
       <div class="home">
         <NavBar></NavBar>
 
-        <MediaQuery query="(min-device-width: 1224px)">
-          <MediaQuery query="(min-width: 1225px)">
+        <MediaQuery query="(min-device-width: 1025px)">
+        <HomeWeb></HomeWeb>
+          {/* <MediaQuery query="(min-width: 1225px)">
             <HomeWeb></HomeWeb>
           </MediaQuery>
           <MediaQuery query="(max-width: 1224px)">
             <HomeTablet></HomeTablet>
-          </MediaQuery>
+          </MediaQuery> */}
         </MediaQuery>
 
-        <MediaQuery query="(max-device-width: 1224px)">
-          <MediaQuery query="(min-device-width: 1024px)">
+        <MediaQuery query="(max-device-width: 1024px)">
+          <MediaQuery query="(min-device-width: 768px)">
             <HomeTablet></HomeTablet>
           </MediaQuery>
 
-          <MediaQuery query="(max-device-width: 1023px)">
+          <MediaQuery query="(max-device-width: 767px)">
             <HomeMobile></HomeMobile>
           </MediaQuery>
         </MediaQuery>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "../../styles/AccountsWeb.css";
+import "./AccountsWeb.css";
 
 import "../../global.js";
 
@@ -78,7 +78,7 @@ class AccountsWeb extends Component {
           <p id="spotifyHeader">Spotify</p>
           <img id="spotifyLogo" src={spotifyLogo} alt=""></img>
           {this.state.loggedIn === false ? (
-            <a href="http://localhost:8888">
+            <a href="http://localhost:8877">
               <button id="loginButton">Login to your Spotify</button>
             </a>
           ) : (

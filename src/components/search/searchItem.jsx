@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "../../styles/searchItem.css";
+import "./searchItem.css";
 import { formatYTTitle } from "../../utils/youtubeInterface";
 
 class SearchItem extends Component {

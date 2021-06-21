@@ -9,6 +9,8 @@ import Accounts from "./pages/accounts";
 
 import NotFoundPage from "./pages/404";
 
+import BottomNavBar from "./components/bottomNavBar";
+
 //Import all needed Component for this tutorial
 import {
   BrowserRouter as Router,
@@ -32,6 +34,8 @@ import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 
 import "font-awesome/css/font-awesome.min.css";
 
+import MediaQuery from "react-responsive";
+
 import { DndProvider } from 'react-dnd-multi-backend';
 import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 
@@ -49,6 +53,7 @@ class App extends Component {
     document.body.style.background = "#252525";
   }
 
+
   createNotification = (type) => {
     console.log("GOT TO CREATE NOTIFICATION");
     switch (type) {
@@ -61,6 +66,26 @@ class App extends Component {
           "Song added to queue",
           1500
         );
+        break;
+      case "mobileOrientation":
+        // Check when last orientation notification was, if in last two mintues then don't display new one
+        var currTime = new Date()
+        if (this.state.lastOrientationNotification === '') {
+          NotificationManager.warning(
+            "Please Rotate Device to Portrait",
+            "Attention:",
+            3000
+          );
+          this.setState({lastOrientationNotification: new Date()})
+        } else if (((currTime.getTime() - this.state.lastOrientationNotification.getTime()) > 30000)){
+          NotificationManager.warning(
+            "Please Rotate Device to Portrait",
+            "Attention:",
+            3000
+          );
+          this.setState({lastOrientationNotification: new Date()})
+        }
+        
         break;
       case "warning":
         NotificationManager.warning(
@@ -79,6 +104,9 @@ class App extends Component {
           }
         );
         break;
+      default:
+        console.log("Not a known notification")
+        break;
     }
     return () => {};
   };
@@ -86,7 +114,7 @@ class App extends Component {
   checkPlayerStatus = (state) => {
     console.log("Player Status: ", state);
 
-    if (state.deviceId != "") {
+    if (state.deviceId !== "") {
       global.spotifyDeviceID = state.deviceId;
     }
 
@@ -108,9 +136,11 @@ class App extends Component {
       this.setState({ isContentPlaying: true });
     }
 
-    if (state.errorType === "authentication_error") {
-      this.createNotification("error");
-    }
+    // Don't need this right now, displays error when first logging in
+    // But if player stops working, need notification
+    // if (state.errorType === "authentication_error") {
+    //   this.createNotification("error");
+    // }
 
     if (state.isPlaying & state.position === 0) {
       global.currentContentPosition = 0;
@@ -127,7 +157,7 @@ class App extends Component {
     this.timer = setInterval(async () => {
       if (global.isContentPlaying) {  
           
-          console.log(global.currentContentPosition);
+          // console.log(global.currentContentPosition);
           this.setState({ currentContentPosition: global.currentContentPosition, isContentPlaying: true });
           global.currentContentPosition += 1;
           
@@ -182,8 +212,11 @@ class App extends Component {
     spotifyAccessToken: global.spotifyAccessToken,
     youtubePlayer: "",
     loadYTVideo: this.loadYTVideo,
-    currentContentPosition: global.currentContentPosition
+    currentContentPosition: global.currentContentPosition,
+    lastOrientationNotification: ''
   };
+
+
 
   render() {
     const { loading, isAuthenticated } = this.context;
@@ -207,6 +240,19 @@ class App extends Component {
       global.timerStarted = true;
     }
 
+
+
+    const handleResize = () => {
+      var width = (window.innerWidth > 0) ? window.innerWidth : window.screen.width;
+      var height = (window.innerHeight > 0) ? window.innerHeight : window.screen.height;
+      if (height < 540 & width > height ) {
+        this.createNotification('mobileOrientation')
+      }
+    }
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
     return (
       <DndProvider options={HTML5toTouch}>
       <SessionContext.Provider value={this.state}>
@@ -214,7 +260,68 @@ class App extends Component {
           <Route
             render={({ location, history }) => (
               <React.Fragment>
-                {isAuthenticated && (
+                <MediaQuery query="(min-device-width: 1025px)">
+                  {isAuthenticated && (
+                    <SideNav
+                      className="sidenav"
+                      onSelect={(selected) => {
+                        const to = "/" + selected;
+                        if (location.pathname !== to) {
+                          history.push(to);
+                        }
+                      }}>
+                      <SideNav.Toggle />
+                      <SideNav.Nav defaultSelected={history.location.pathname}>
+                        <NavItem eventKey="Session">
+                          <NavIcon>
+                            <i
+                              className="fa fa-fw fa-play-circle"
+                              style={{ fontSize: "1.75em" }}
+                            />
+                          </NavIcon>
+                          <NavText>Session</NavText>
+                        </NavItem>
+                        <NavItem eventKey="Search">
+                          <NavIcon>
+                            <i
+                              className="fa fa-fw fa-search"
+                              style={{ fontSize: "1.75em" }}
+                            />
+                          </NavIcon>
+                          <NavText>Search</NavText>
+                        </NavItem>
+                        <NavItem eventKey="Library">
+                          <NavIcon>
+                            <i
+                              className="fa fa-fw fa-book"
+                              style={{ fontSize: "1.75em" }}
+                            />
+                          </NavIcon>
+                          <NavText>Library</NavText>
+                        </NavItem>
+
+                        <NavItem eventKey="Accounts">
+                          <NavIcon>
+                            <i
+                              className="fa fa-fw fa-user-circle"
+                              style={{ fontSize: "1.75em" }}
+                            />
+                          </NavIcon>
+                          <NavText>Music Profiles</NavText>
+                        </NavItem>
+                      </SideNav.Nav>
+                    </SideNav>
+                  )}
+                </MediaQuery>
+
+                <MediaQuery query="(max-device-width: 1024px)">
+                  <BottomNavBar onBottomTabSelect={(tab) => {
+                        const to = "/" + tab;
+                        if (location.pathname !== to) {
+                          history.push(to);
+                        }}}></BottomNavBar>
+                </MediaQuery>
+                {/* {isAuthenticated && (
                   <SideNav
                     className="sidenav"
                     onSelect={(selected) => {
@@ -264,7 +371,7 @@ class App extends Component {
                       </NavItem>
                     </SideNav.Nav>
                   </SideNav>
-                )}
+                )} */}
                 {isAuthenticated && (
                   <SpotifyPlayer
                     token={this.state.spotifyAccessToken}
@@ -284,12 +391,13 @@ class App extends Component {
                 <NotificationContainer />
                 <main>
                   <Switch>
+                  {!isAuthenticated && (
+                      <Route exact path="/Welcome" component={Welcome} />
+                    )}
                     <Route exact path="/Session" component={Session} />
                     <Route exact path="/Search" component={Search} />
                     <Route exact path="/Library" component={Library} />
-                    {!isAuthenticated && (
-                      <Route exact path="/Welcome" component={Welcome} />
-                    )}
+                    
 
                     <Route
                       exact
@@ -315,3 +423,4 @@ class App extends Component {
 }
 
 export default App;
+

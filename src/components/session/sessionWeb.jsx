@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "../../styles/SessionWeb.css";
+import "./SessionWeb.css";
 
 import SessionController from "./sessionController";
 import SessionQueue from "./sessionQueue";
@@ -39,8 +39,8 @@ class SessionWeb extends Component {
       <React.Suspense fallback={<div>Loading...</div>}>
         <div className="sessionFlex">
           <div className="sessionMiddle">
-            <SessionController editQueue={this.editQueue}></SessionController>
-            <SessionQueue isEditingQueue={this.state.isEditingQueue} showContentOptions={this.showContentOptions}></SessionQueue>
+            <SessionController editQueue={this.editQueue} deviceType="Web"></SessionController>
+            <SessionQueue isEditingQueue={this.state.isEditingQueue} deviceType="Web" showContentOptions={this.showContentOptions}></SessionQueue>
           </div>
           <SessionRight songOptionsSelected={this.state.songOptionsSelected} selectedPlatform={this.state.selectedPlatform} selectedContentInfo={this.state.selectedContentInfo}></SessionRight>
           

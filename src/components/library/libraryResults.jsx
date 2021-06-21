@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "../../styles/LibraryResults.css";
+import "./LibraryResults.css";
 
 import LibraryItem from "./libraryItem";
 
@@ -16,12 +16,13 @@ class LibraryResults extends Component {
     for (var key in libraryPullResults) {
       libraryPullResultsArray.push(libraryPullResults[key]);
     }
-
+    //{showingPlaylistContent ? "playlistContentDiv" : "libraryDiv"}
     return (
       <div className="libraryDiv">
         {selectedTab === "Favorites"
           ? libraryPullResultsArray.map((item) => (
               <LibraryItem
+                key={item.id} 
                 songInfo={item}
                 addSongToQueue={() =>
                   this.props.addSongToQueue(

@@ -1,0 +1,326 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Raleway:600&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Raleway:500&display=swap");
+
+#controllerDiv {
+  height: 35%;
+  width: 100%;
+
+  text-align: center;
+
+  position: relative;
+
+  overflow: hidden;
+  /* background: url("../resources/images/AlbumImgPlaceholder.png"); */
+}
+
+#controllerDivMobile {
+  height: 43%;
+  width: 100%;
+
+  text-align: center;
+
+  position: relative;
+
+  overflow: hidden;
+  /* background: url("../resources/images/AlbumImgPlaceholder.png"); */
+}
+
+img.currentTrackPicSpotify {
+  position: absolute;
+  top: -10%;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.75;
+
+  width: 100%;
+  height: auto;
+
+  margin: 0px;
+
+  opacity: 0.23;
+
+  z-index: 0;
+}
+
+img.currentTrackPicYT {
+  position: absolute;
+  top: -43%;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.75;
+
+  width: 183%;
+  height: auto;
+
+  margin: 0px;
+
+  opacity: 0.23;
+
+  z-index: 0;
+}
+
+div.controllerButtonsWeb {
+  display: flex;
+  /* flex-wrap: wrap; */
+  align-content: center;
+  /* align-content: flex-start; */
+
+  text-align: center;
+
+  width: 40%;
+  max-width: 280px;
+  min-width: 180px;
+  height: 50%;
+  margin: auto;
+
+  position: relative;
+  top: 37%;
+
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+div.controllerButtonsMobile {
+  display: flex;
+  /* flex-wrap: wrap; */
+  align-content: center;
+  /* align-content: flex-start; */
+
+  text-align: center;
+
+  width: 65%;
+  max-width: 280px;
+  min-width: 180px;
+  height: 50%;
+  margin: auto;
+
+  position: relative;
+  top: 43%;
+
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#buttonBox {
+  width: 33.333%;
+  height: 100%;
+}
+
+#restartButton {
+  background: url("../../resources/images/RestartButton.png");
+
+  background-repeat: no-repeat;
+
+  border: none;
+
+  height: auto;
+  width: 6.4vh;
+  margin: auto;
+
+  position: relative;
+  top: 34%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#playButton {
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+
+  border: none;
+
+  /* max-height: 50px;
+  max-width: 50px;
+  min-width: 32px; */
+  height: auto;
+
+  margin-right: -20px;
+  margin-left: -8px;
+
+  position: relative;
+  top: 34%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#skipButton {
+  background: url("../../resources/images/SkipButton.png");
+  background-repeat: no-repeat;
+
+  border: none;
+
+  height: auto;
+  width: 6.4vh;
+  margin: auto;
+
+  position: relative;
+  top: 34%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+button:focus {
+  outline: none !important;
+}
+
+div.songText {
+  width: 100%;
+  text-align: center;
+  margin-top: 5px;
+  z-index: 1000;
+  position: relative;
+}
+
+div.TitleandPlatform {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+
+  margin-left: auto;
+  margin-right: auto;
+  width: 65vw;
+
+  margin-bottom: 0px;
+  font-family: "Raleway", sans-serif;
+  font-style: bold;
+  font-weight: 700;
+  font-size: min(1.75vh, 18px);
+  color: #ffffff;
+  top: 31%;
+}
+
+img.spotifyIconCP {
+  /* background: url("../resources/images/Spotify.png"); */
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: 0;
+
+  height: 16px;
+  width: 16px;
+
+  margin-left: 10px;
+  margin-top: 2px;
+  margin-right: auto;
+}
+
+img.youtubeIconCP {
+  /* background: url("../resources/images/Spotify.png"); */
+
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: 0;
+
+  height: 16px;
+  width: 21px;
+
+  margin-left: 10px;
+  margin-top: 1px;
+  margin-right: auto;
+}
+
+div.placeHolderIcon {
+  /* background: url("../resources/images/Spotify.png"); */
+
+  border: 0;
+
+  height: 16px;
+  width: 16px;
+
+  margin-left: 10px;
+  margin-top: 1px;
+  margin-right: auto;
+}
+
+#songTitle {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+  margin-left: auto;
+  width: fit-content;
+  margin-bottom: 0px;
+
+  font-family: "Raleway", sans-serif;
+  font-style: bold;
+  font-weight: 700;
+  font-size: max(1.75vh, 11px);
+
+  color: #ffffff;
+
+  top: 31%;
+}
+
+#songArtist {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 65vw;
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-top: 5px;
+
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: max(1.5vh, 9px);
+
+  color: #ffffff;
+}
+
+div.seekbarDivWeb {
+  width: 41%;
+  min-width: 230px;
+  margin: auto;
+  margin-top: -8px;
+  z-index: 1000;
+  position: relative;
+}
+
+div.seekbarDivMobile {
+  width: 70vw;
+  margin: auto;
+  margin-top: 2.5vh;
+  z-index: 1000;
+  position: relative;
+}
+
+p.upNextText {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: max(1.3vh, 9px);
+  color: #ffffff;
+
+  position: absolute;
+  left: 3%;
+  bottom: -11px;
+}
+
+button.editQueueButton {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: max(1.3vh, 9px);
+  color: #ffffff;
+  background-color: transparent;
+  border: none;
+  outline: none;
+
+  position: absolute;
+  right: 2.6%;
+  bottom: 4px;
+}
+
+.r-fontSize-mehaz4 {
+  font-size: max(1.3vh, 12px);
+  width: auto !important;
+}

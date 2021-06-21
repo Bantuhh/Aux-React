@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom'
 
-import "../../styles/SessionController.css";
+import "./SessionController.css";
 
 import { SessionContext } from "../../session-context";
 
@@ -235,11 +235,15 @@ class SessionController extends Component {
     return (
       <SessionContext.Consumer>
         {({ isContentPlaying }) => (
-          <div className="controllerDiv">
+          <div id={this.props.deviceType === "Web" ? "controllerDiv" : "controllerDivMobile"}>
 
             <img
-              className="currentTrackPic"
-              src={
+              className={global.currentlyPlaying === ""
+                  ? ""
+                  : global.currentlyPlaying[0] === "Youtube"
+                  ? "currentTrackPicYT"
+                  : "currentTrackPicSpotify"}
+              src={ // Change img path based on youtube/spotify
                 global.currentlyPlaying === ""
                   ? ""
                   : global.currentlyPlaying[0] === "Youtube"
@@ -247,26 +251,37 @@ class SessionController extends Component {
                   : global.currentlyPlaying[1].album.images[0].url
               }
               alt=""></img>
-            <div className="controllerButtons">
-              <button
-                className="restartButton"
-                onClick={this.restartPressed}></button>
-              <button
-                className="playButton"
-                style={{
-                  background: global.isContentPlaying
-                    ? "url(" +
-                      require("../../resources/images/PauseButton.png") +
-                      ")"
-                    : "url(" +
-                      require("../../resources/images/PlayButton.png") +
-                      ")",
-                  left: global.isContentPlaying ? "-5px" : "",
-                }}
-                onClick={this.playButtonPress}></button>
-              <button
-                className="skipButton"
-                onClick={this.skipPressed}></button>
+            <div className={this.props.deviceType === "Web" ? "controllerButtonsWeb" : "controllerButtonsMobile"}>
+              <div id="buttonBox">
+                <img
+                src={require("../../resources/images/RestartButton.png")}
+                id="restartButton"
+                onClick={this.restartPressed}
+                alt='Restart Button'></img>
+                </div>
+              <div id="buttonBox">
+                <img
+                  id="playButton"
+                  src={ global.isContentPlaying
+                      ? 
+                        require("../../resources/images/PauseButton.png")
+                      : 
+                        require("../../resources/images/PlayButton.png")}
+                  style={{
+                    
+                    left: global.isContentPlaying ? "-5px" : "",
+                    width: global.isContentPlaying ? "5.4vh" : "4.8vh"
+                  }}
+                  onClick={this.playButtonPress}
+                  alt='Play Button'></img>
+                </div>
+                <div id="buttonBox">
+                <img
+                  src={require("../../resources/images/SkipButton.png")}
+                  id="skipButton"
+                  onClick={this.skipPressed}
+                  alt='Skip Button'></img>
+                </div>
             </div>
             <div className="songText">
               <div className="TitleandPlatform">
@@ -282,7 +297,7 @@ class SessionController extends Component {
                 ) : global.currentlyPlaying[0] === "Spotify" ? (
                   <img src={spotifyIcon} alt="" className="spotifyIconCP"></img>
                 ) : (
-                  ""
+                  <div className="placeHolderIcon"></div>
                 )}
               </div>
 
@@ -294,7 +309,7 @@ class SessionController extends Component {
                   : this.formatArtistString(global.currentlyPlaying[1].artists)}
               </p>
             </div>
-            <div className="seekbarDiv">
+            <div className={this.props.deviceType === "Web" ? "seekbarDivWeb" : "seekbarDivMobile"}>
 
               <SeekBar
                 onSeek={this.seek.bind(this)}

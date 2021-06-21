@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "../../styles/queueItem.css";
+import "./queueItem.css";
 
 import { formatYTTitle } from "../../utils/youtubeInterface";
 
@@ -51,7 +51,7 @@ class QueueItem extends Component {
       <div className="queueItemDiv">
         <img className="albumImg" src={contentImgPath} alt=""></img>
         <div className="songInfoDiv">
-          <div className="titleAndIcon">
+          <div className={platform === "Youtube" ? "titleAndIconYT" : 'titleAndIconSpotify'}>
             <p className="songTitle">{title}</p>
             {platform === "Youtube" ? (
               <img src={youtubeIcon} alt="" className="youtubeIcon"></img>

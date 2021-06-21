@@ -1,0 +1,57 @@
+#queueDivWeb {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  overflow-y: auto;
+  position: relative;
+
+  height: 65%;
+  width: 100%;
+}
+
+#queueDivMobile {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  overflow-y: auto;
+  position: relative;
+
+  height: 57%;
+  width: 100%;
+}
+
+p.noQueueItemsText {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: max(1.4vh, 9px);
+
+  color: #ffffff;
+
+  margin: auto;
+
+  margin-top: 20vh;
+}
+
+div.noQueueItemsDiv {
+  border-top: 1px solid #c4c4c4;
+  text-align: center;
+
+  height: 100%;
+  width: 100%;
+}
+
+/* button.editQueueButton {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: min(1.1vw, 12px);
+  color: #ffffff;
+  background-color: transparent;
+
+  position: absolute;
+  right: 15px;
+  top: -25px;
+
+  z-index: 100;
+} */
