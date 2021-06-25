@@ -7,9 +7,39 @@ div.accountsDiv {
   width: calc(100vw - 64px);
   height: calc(100vh - 76px);
 
-  padding-top: 64px;
+  padding-top: 3vh;
 
   text-align: center;
+}
+
+#musicAccountsHeadingWeb {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2.8vh;
+
+  width: 80%;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  color: #ffffff;
+  text-align: left;
+}
+
+#musicAccountsBodyWeb {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.43vh;
+
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+
+  color: #ffffff;
+  margin-bottom: 6vh;
+  text-align: left;
 }
 
 div.spotifyBox {
@@ -18,7 +48,8 @@ div.spotifyBox {
   height: 30%;
 
   border: 1px solid #c4c4c4;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 
   display: flex;
   align-items: center;

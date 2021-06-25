@@ -4,9 +4,40 @@ div.accountsDivMobile {
   width: 100vw;
   height: 100vh;
 
-  margin-top: 36px;
-
   text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#musicAccountsHeading {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2.8vh;
+
+  width: 88%;
+
+  margin-top: 3vh;
+  margin-left: auto;
+  margin-right: auto;
+
+  color: #ffffff;
+  text-align: left;
+}
+
+#musicAccountsBody {
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.43vh;
+
+  width: 88%;
+  margin-left: auto;
+  margin-right: auto;
+
+  color: #ffffff;
+  margin-bottom: 6vh;
+  text-align: left;
 }
 
 div.spotifyBoxMobile {
@@ -15,7 +46,8 @@ div.spotifyBoxMobile {
   height: 31%;
 
   border: 1px solid #c4c4c4;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 
   display: flex;
   align-items: center;

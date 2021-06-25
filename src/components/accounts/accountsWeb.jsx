@@ -74,6 +74,8 @@ class AccountsWeb extends Component {
   render() {
     return (
       <div className="accountsDiv">
+        <div id="musicAccountsHeadingWeb">Music Accounts: </div>
+        <div id="musicAccountsBodyWeb">Log in to access Favorites, Playlists, and Search functionality. </div>
         <div className="spotifyBox">
           <p id="spotifyHeader">Spotify</p>
           <img id="spotifyLogo" src={spotifyLogo} alt=""></img>

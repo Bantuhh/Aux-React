@@ -241,7 +241,7 @@ class App extends Component {
     }
 
 
-
+    // Sends notification to user on mobile if trying to view in landscape
     const handleResize = () => {
       var width = (window.innerWidth > 0) ? window.innerWidth : window.screen.width;
       var height = (window.innerHeight > 0) ? window.innerHeight : window.screen.height;
@@ -315,68 +315,16 @@ class App extends Component {
                 </MediaQuery>
 
                 <MediaQuery query="(max-device-width: 1024px)">
-                  <BottomNavBar onBottomTabSelect={(tab) => {
+                  {isAuthenticated && <BottomNavBar onBottomTabSelect={(tab) => {
                         const to = "/" + tab;
                         if (location.pathname !== to) {
                           history.push(to);
-                        }}}></BottomNavBar>
+                        }}}></BottomNavBar>}
                 </MediaQuery>
-                {/* {isAuthenticated && (
-                  <SideNav
-                    className="sidenav"
-                    onSelect={(selected) => {
-                      const to = "/" + selected;
-                      if (location.pathname !== to) {
-                        history.push(to);
-                      }
-                    }}>
-                    <SideNav.Toggle />
-                    <SideNav.Nav defaultSelected={history.location.pathname}>
-                      <NavItem eventKey="Session">
-                        <NavIcon>
-                          <i
-                            className="fa fa-fw fa-play-circle"
-                            style={{ fontSize: "1.75em" }}
-                          />
-                        </NavIcon>
-                        <NavText>Session</NavText>
-                      </NavItem>
-                      <NavItem eventKey="Search">
-                        <NavIcon>
-                          <i
-                            className="fa fa-fw fa-search"
-                            style={{ fontSize: "1.75em" }}
-                          />
-                        </NavIcon>
-                        <NavText>Search</NavText>
-                      </NavItem>
-                      <NavItem eventKey="Library">
-                        <NavIcon>
-                          <i
-                            className="fa fa-fw fa-book"
-                            style={{ fontSize: "1.75em" }}
-                          />
-                        </NavIcon>
-                        <NavText>Library</NavText>
-                      </NavItem>
-
-                      <NavItem eventKey="Accounts">
-                        <NavIcon>
-                          <i
-                            className="fa fa-fw fa-user-circle"
-                            style={{ fontSize: "1.75em" }}
-                          />
-                        </NavIcon>
-                        <NavText>Music Accounts</NavText>
-                      </NavItem>
-                    </SideNav.Nav>
-                  </SideNav>
-                )} */}
+              
                 {isAuthenticated && (
                   <SpotifyPlayer
                     token={this.state.spotifyAccessToken}
-                    // uris={[]}
-                    // autoPlay={true}
                     play={true}
                     callback={(state) => this.checkPlayerStatus(state)}
                   />
@@ -391,25 +339,28 @@ class App extends Component {
                 <NotificationContainer />
                 <main>
                   <Switch>
-                  {!isAuthenticated && (
-                      <Route exact path="/Welcome" component={Welcome} />
-                    )}
-                    <Route exact path="/Session" component={Session} />
-                    <Route exact path="/Search" component={Search} />
-                    <Route exact path="/Library" component={Library} />
-                    
-
-                    <Route
+                    {isAuthenticated && <Route
                       exact
                       path="/Accounts"
                       render={(props) => (
                         <Accounts {...props} spotifyLogin={this.spotifyLogin} />
                       )}
-                    />
-                    <Route exact path="/signUp" component={SignUp} />
-                    <Route exact path="/404" component={NotFoundPage} />
-                    {isAuthenticated && <Redirect to="/Session" />}
-                    {!isAuthenticated && <Redirect to="/Welcome" />}
+                    />}
+                    {isAuthenticated && <Route exact path="/Session" component={Session} />}
+                    {isAuthenticated && <Route exact path="/Search" component={Search} />}
+                    {isAuthenticated && <Route exact path="/Library" component={Library} />}
+                    {!isAuthenticated && <Route exact path="/Welcome" component={Welcome} />}
+
+                    {/* When first logged in, redirect to accounts page to log into Music Accounts */}
+                    {isAuthenticated && <Redirect
+                      to="/Accounts"
+                      render={(props) => (
+                        <Accounts {...props} spotifyLogin={this.spotifyLogin} />
+                      )}
+                    />}
+
+                    {/* If not logged in, redirect to Welcome page */}
+                    {!isAuthenticated && <Redirect to="/Welcome" component={Welcome}/>}
                   </Switch>
                 </main>
               </React.Fragment>

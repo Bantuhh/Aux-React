@@ -17,6 +17,7 @@ class AccountsMobile extends Component {
     const params = this.getHashParams();
 
     if (params.access_token) {
+      console.log(params)
       global.spotifyLoggedIn = true;
       global.spotifyAccessToken = params.access_token;
 
@@ -74,6 +75,8 @@ class AccountsMobile extends Component {
   render() {
     return (
       <div className="accountsDivMobile">
+        <div id="musicAccountsHeading">Music Accounts: </div>
+        <div id="musicAccountsBody">Log in to access Favorites, Playlists, and Search functionality. </div>
         <div className="spotifyBoxMobile" style={{ height: this.state.loggedIn === false ? '15%': '30%'}}>
           <div className="spotifyHeaderAndLogoDiv">
             <p id="spotifyHeaderMobile">Spotify</p>
