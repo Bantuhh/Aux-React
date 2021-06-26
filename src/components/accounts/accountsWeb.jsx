@@ -80,7 +80,7 @@ class AccountsWeb extends Component {
           <p id="spotifyHeader">Spotify</p>
           <img id="spotifyLogo" src={spotifyLogo} alt=""></img>
           {this.state.loggedIn === false ? (
-            <a href="http://localhost:8877">
+            <a href="https://master.d3383i0ilmxdq8.amplifyapp.com">
               <button id="loginButton">Login to your Spotify</button>
             </a>
           ) : (
