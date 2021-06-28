@@ -83,7 +83,7 @@ class AccountsMobile extends Component {
             <img id="spotifyLogoMobile" src={spotifyLogo} alt=""></img>
           </div>
           {this.state.loggedIn === false ? (
-            <a href="https://master.d3383i0ilmxdq8.amplifyapp.com">
+            <a href="http://spotifynodeserver-env.eba-xnyukggx.us-east-2.elasticbeanstalk.com/">
               <button id="loginButtonMobile">Login to your Spotify</button>
             </a>
           ) : (
