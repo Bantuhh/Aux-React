@@ -260,13 +260,13 @@ class App extends Component {
         .then(token => {
           console.log({ token });
         })
-        .catch(err => {
-          loginWithRedirect({
-            audience: 'https://mmanagement.auth0.com/api/v2/'
-          });
-        })
+        // .catch(err => {
+        //   loginWithRedirect({
+        //     audience: 'https://mmanagement.auth0.com/api/v2/'
+        //   });
+        // })
   
-      return <span>Loading...</span>
+      // return <span>Loading...</span>
     }
   
 
