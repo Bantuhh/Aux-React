@@ -219,7 +219,7 @@ class App extends Component {
 
 
   render() {
-    const { loading, isAuthenticated } = this.context;
+    const { loading, isAuthenticated, handleRedirectCallback } = this.context;
 
     const opts = {
       height: "0",
@@ -261,8 +261,11 @@ class App extends Component {
 
       if (isAuthenticated) {
         // show the gated content
+        console.log("Is Authenticated")
         return;
       }
+
+      console.log("Not Authenticated handling redirect..")
       // Process the login state
       await handleRedirectCallback();
 
