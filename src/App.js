@@ -253,6 +253,35 @@ class App extends Component {
 
     window.addEventListener('resize', handleResize);
 
+    // ..
+
+    window.onload = async () => {
+
+      // .. code ommited for brevity
+
+      if (isAuthenticated) {
+        // show the gated content
+        return;
+      }
+      // Process the login state
+      await handleRedirectCallback();
+
+      // NEW - check for the code and state parameters
+      // const query = window.location.search;
+      // if (query.includes("code=") && query.includes("state=")) {
+
+      //   // Process the login state
+      //   await auth0.handleRedirectCallback();
+        
+      //   updateUI();
+
+      //   // Use replaceState to redirect the user away and remove the querystring parameters
+      //   window.history.replaceState({}, document.title, "/");
+      // }
+    };
+
+    // ..
+
     return (
       <DndProvider options={HTML5toTouch}>
       <SessionContext.Provider value={this.state}>
