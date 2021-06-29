@@ -219,7 +219,7 @@ class App extends Component {
 
 
   render() {
-    const { loading, isAuthenticated, getTokenSilently } = this.context;
+    const { loading, isAuthenticated, getTokenSilently, loginWithRedirect } = this.context;
 
     const opts = {
       height: "0",
