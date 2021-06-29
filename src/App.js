@@ -253,38 +253,49 @@ class App extends Component {
 
     window.addEventListener('resize', handleResize);
 
-    if (!isAuthenticated) {
+    // if (!isAuthenticated) {
+    //   getTokenSilently({
+    //     audience: 'https://mmanagement.auth0.com/api/v2/'
+    //   })
+    //     .then(token => {
+    //       console.log({ token });
+    //     })
+    //     .catch(err => {
+    //       loginWithRedirect({
+    //         audience: 'https://mmanagement.auth0.com/api/v2/'
+    //       });
+    //     })
+  
+    //   // return <span>Loading...</span>
+    // }
+  
+
+    window.onload = async () => {
+
+      // .. code ommited for brevity
+
+      if (isAuthenticated) {
+        // show the gated content
+        console.log("Is Authenticated")
+        return;
+      }
+
+      console.log("Not Authenticated, getting token silently..")
+      // Process the login state
       getTokenSilently({
         audience: 'https://mmanagement.auth0.com/api/v2/'
       })
-        .then(token => {
-          console.log({ token });
-        })
-        // .catch(err => {
-        //   loginWithRedirect({
-        //     audience: 'https://mmanagement.auth0.com/api/v2/'
-        //   });
-        // })
-  
-      // return <span>Loading...</span>
-    }
-  
+      .then(token => {
+        console.log({ token });
+      })
+      .catch(err => {
+        console.log("Err: Couldn't get token.");
+        loginWithRedirect({
+          audience: 'https://mmanagement.auth0.com/api/v2/'
+        });
+      })
 
-    // window.onload = async () => {
-
-    //   // .. code ommited for brevity
-
-    //   if (isAuthenticated) {
-    //     // show the gated content
-    //     console.log("Is Authenticated")
-    //     return;
-    //   }
-
-    //   console.log("Not Authenticated, getting token silently..")
-    //   // Process the login state
-    //   const token = await getTokenSilently();
-
-    // };
+    };
 
     // ..
 
