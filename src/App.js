@@ -219,7 +219,7 @@ class App extends Component {
 
 
   render() {
-    const { loading, isAuthenticated, handleRedirectCallback } = this.context;
+    const { loading, isAuthenticated, getTokenSilently } = this.context;
 
     const opts = {
       height: "0",
@@ -265,9 +265,9 @@ class App extends Component {
         return;
       }
 
-      console.log("Not Authenticated handling redirect..")
+      console.log("Not Authenticated, getting token silently..")
       // Process the login state
-      await handleRedirectCallback();
+      const token = await getTokenSilently();
 
       // NEW - check for the code and state parameters
       // const query = window.location.search;
