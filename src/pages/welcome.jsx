@@ -17,6 +17,54 @@ import InfoSquaresWeb from "../components/welcome/infoSquaresWeb.jsx";
 // import HomeSignInWeb from "../components/welcome/homeSignInWeb.jsx";
 
 class Welcome extends Component {
+  constructor(props) {
+    super(props);
+    const params = this.getHashParams();
+
+    if (params.access_token) {
+      global.spotifyLoggedIn = true;
+      global.spotifyAccessToken = params.access_token;
+
+      spotifyWebApi.setAccessToken(params.access_token);
+      this.getUserData(params.access_token).then((response) => {
+        this.setState({
+          userImage: response.images[0].url,
+        });
+        global.spotifyUserImage = response.images[0].url;
+      });
+
+      this.props.spotifyLogin();
+    }
+
+    this.state = {
+      loggedIn: global.spotifyLoggedIn,
+      accessToken: global.spotifyAccessToken,
+      userImage: global.spotifyUserImage,
+    };
+
+  }
+
+  getHashParams() {
+    var hashParams = {};
+    var e,
+      r = /([^&;=]+)=?([^&;]*)/g,
+      q = window.location.hash.substring(1);
+    while ((e = r.exec(q))) {
+      hashParams[e[1]] = decodeURIComponent(e[2]);
+    }
+
+    return hashParams;
+  }
+
+  getUserData(accessToken) {
+    return $.ajax({
+      url: "https://api.spotify.com/v1/me",
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+  }
+
   render() {
     return (
       <div class="home">

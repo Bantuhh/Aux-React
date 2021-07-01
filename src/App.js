@@ -4,10 +4,7 @@ import Session from "./pages/session";
 import Search from "./pages/search";
 import Library from "./pages/library";
 import Welcome from "./pages/welcome";
-import SignUp from "./pages/signUp";
 import Accounts from "./pages/accounts";
-
-import NotFoundPage from "./pages/404";
 
 import BottomNavBar from "./components/bottomNavBar";
 
@@ -219,7 +216,7 @@ class App extends Component {
 
 
   render() {
-    const { loading, isAuthenticated, getTokenSilently, loginWithRedirect } = this.context;
+    const { loading, isAuthenticated, user } = this.context;
 
     const opts = {
       height: "0",
@@ -252,50 +249,40 @@ class App extends Component {
     handleResize();
 
     window.addEventListener('resize', handleResize);
+    
+    if (isAuthenticated) {
+      // save user in Aux Profile
+      AuxProfile.setAuthUser(user);
+      
+    }
 
-    // if (!isAuthenticated) {
+    // window.onload = async () => {
+
+    //   // .. code ommited for brevity
+
+    //   if (isAuthenticated) {
+    //     // show the gated content
+    //     console.log("Is Authenticated")
+    //     return;
+    //   }
+
+    //   console.log("Not Authenticated, getting token silently..")
+    //   // Process the login state
     //   getTokenSilently({
     //     audience: 'https://mmanagement.auth0.com/api/v2/'
     //   })
-    //     .then(token => {
-    //       console.log({ token });
-    //     })
-    //     .catch(err => {
-    //       loginWithRedirect({
-    //         audience: 'https://mmanagement.auth0.com/api/v2/'
-    //       });
-    //     })
-  
-    //   // return <span>Loading...</span>
-    // }
-  
+    //   .then(token => {
+    //     console.log({ token });
+    //   })
+    //   .catch(err => {
+    //     console.log("Err: Couldn't get token.");
+    //     loginWithRedirect({
+    //       audience: 'https://mmanagement.auth0.com/api/v2/'
+    //     });
+    //   })
 
-    window.onload = async () => {
 
-      // .. code ommited for brevity
-
-      if (isAuthenticated) {
-        // show the gated content
-        console.log("Is Authenticated")
-        return;
-      }
-
-      console.log("Not Authenticated, getting token silently..")
-      // Process the login state
-      getTokenSilently({
-        audience: 'https://mmanagement.auth0.com/api/v2/'
-      })
-      .then(token => {
-        console.log({ token });
-      })
-      .catch(err => {
-        console.log("Err: Couldn't get token.");
-        loginWithRedirect({
-          audience: 'https://mmanagement.auth0.com/api/v2/'
-        });
-      })
-
-    };
+    // };
 
     // ..
 

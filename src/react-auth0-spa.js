@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
 
+import AuxProfile from './utils/AuxProfile';
+
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
 
@@ -38,6 +40,7 @@ export const Auth0Provider = ({
       if (isAuthenticated) {
         const user = await auth0FromHook.getUser();
         setUser(user);
+        AuxProfile.setAuthUser(user);
       }
 
       setLoading(false);
@@ -57,6 +60,7 @@ export const Auth0Provider = ({
     }
     const user = await auth0Client.getUser();
     setUser(user);
+    AuxProfile.setAuthUser(user);
     setIsAuthenticated(true);
   };
 
@@ -67,6 +71,7 @@ export const Auth0Provider = ({
     setLoading(false);
     setIsAuthenticated(true);
     setUser(user);
+    AuxProfile.setAuthUser(user);
   };
   return (
     <Auth0Context.Provider
