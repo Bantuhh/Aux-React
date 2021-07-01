@@ -8,6 +8,8 @@ import Accounts from "./pages/accounts";
 
 import BottomNavBar from "./components/bottomNavBar";
 
+import AuxProfile from "./utils/AuxProfile"
+
 //Import all needed Component for this tutorial
 import {
   BrowserRouter as Router,

@@ -16,6 +16,13 @@ import InfoSquaresWeb from "../components/welcome/infoSquaresWeb.jsx";
 
 // import HomeSignInWeb from "../components/welcome/homeSignInWeb.jsx";
 
+import "../global.js";
+
+import $ from "jquery";
+
+import Spotify from "spotify-web-api-js";
+const spotifyWebApi = new Spotify();
+
 class Welcome extends Component {
   constructor(props) {
     super(props);
