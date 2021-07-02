@@ -106,7 +106,7 @@ class AccountsMobile extends Component {
       global.spotifyAccessToken = spotifyData.accessToken;
       global.spotifyUserImage = spotifyData.userImage
 
-      spotifyWebApi.setAccessToken(params.access_token);
+      spotifyWebApi.setAccessToken(spotifyData.accessToken);
       this.props.spotifyLogin();
     }
 
