@@ -126,6 +126,7 @@ div.spotifyHeaderAndLogoDiv {
   margin: auto;
   width: fit-content;
   margin-left: 5vw;
+  color: white;
 
   text-align: left;
 }

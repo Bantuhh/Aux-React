@@ -130,6 +130,7 @@ img.userImage {
   margin: auto;
   width: fit-content;
   padding-left: 5px;
+  color: white;
 
   text-align: left;
 }
