@@ -16,12 +16,9 @@ const spotifyWebApi = new Spotify();
 class AccountsMobile extends Component {
   static contextType = Auth0Context;
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
-    if (this.props.notAuthenticated) {
-      this.context.loginWithRedirect({});
-    }
     const params = this.getHashParams();
 
     if (params.access_token) {
@@ -81,6 +78,12 @@ class AccountsMobile extends Component {
   }
 
   render() {
+    const { isAuthenticated, loginWithRedirect, logout } = this.context;
+
+    if (!isAuthenticated) {
+      loginWithRedirect({});
+    }
+
     return (
       <div className="accountsDivMobile">
         <div id="musicAccountsHeading">Music Accounts: </div>

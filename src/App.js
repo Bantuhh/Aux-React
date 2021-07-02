@@ -398,7 +398,7 @@ class App extends Component {
                     {!isAuthenticated && <Route
                       path="/Accounts"
                       render={(props) => (
-                        <Accounts {...props} spotifyLogin={this.spotifyLogin} notAuthenticated={true}/>
+                        <Accounts {...props} spotifyLogin={this.spotifyLogin}/>
                       )}
                     />}
                     {!isAuthenticated && <Redirect to="/Welcome" component={Welcome}/>}
