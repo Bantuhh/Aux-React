@@ -16,7 +16,7 @@ var AuxProfile = (function() {
 
     // Current users personal queue
     var getCurrentSoloQueue = function() {
-        return localStorage.getItem("currentSoloQueue") || current_solo_queue;
+        return JSON.parse(localStorage.getItem("currentSoloQueue")) || current_solo_queue;
     };
 
     var setCurrentSoloQueue = function(currentSoloQueue) {
@@ -27,7 +27,7 @@ var AuxProfile = (function() {
 
     // Spotify login data
     var getSpotifyData = function () {
-        return localStorage.getItem("spotifyData") || spotify_data
+        return JSON.parse(localStorage.getItem("spotifyData")) || spotify_data
     }
 
     var setSpotifyData = function (spotifyData) {
