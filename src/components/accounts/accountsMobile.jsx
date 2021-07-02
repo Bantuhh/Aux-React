@@ -37,18 +37,23 @@ class AccountsMobile extends Component {
       });
 
       this.props.spotifyLogin();
-    }
 
-    this.state = {
-      loggedIn: global.spotifyLoggedIn,
-      accessToken: global.spotifyAccessToken,
-      userImage: global.spotifyUserImage,
-    };
+      AuxProfile.setSpotifyData({
+        accessToken: global.spotifyAccessToken,
+        userImage: global.spotifyUserImage,
+      })
 
-    AuxProfile.setSpotifyData({
-      accessToken: global.spotifyAccessToken,
-      userImage: global.spotifyUserImage,
-    })
+    } 
+
+    this.refreshSpotifyLogin()
+
+    // this.state = {
+    //   loggedIn: global.spotifyLoggedIn,
+    //   accessToken: global.spotifyAccessToken,
+    //   userImage: global.spotifyUserImage,
+    // };
+
+    
 
     this.logout = this.logout.bind(this);
   }
@@ -101,7 +106,7 @@ class AccountsMobile extends Component {
       loginWithRedirect({});
     }
 
-    this.refreshSpotifyLogin()
+    // this.refreshSpotifyLogin()
 
     return (
       <div className="accountsDivMobile">
