@@ -85,12 +85,12 @@ class AccountsMobile extends Component {
   }
 
   refreshSpotifyLogin() {
-    spotifyData = AuxProfile.getSpotifyData();
+    var spotifyData = AuxProfile.getSpotifyData();
 
     this.setState({
       loggedIn: spotifyData.accessToken ? true : false,
-      accessToken: spotifyData.accessToken ? spotifyData.accessToken : "",
-      userImage: spotifyData.userImage ? spotifyData.userImage : "",
+      accessToken: spotifyData.accessToken,
+      userImage: spotifyData.userImage,
     });
   }
 
