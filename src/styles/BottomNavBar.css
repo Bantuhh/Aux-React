@@ -12,7 +12,7 @@
   display: flex;
   justify-content: center;
   height: 100%;
-  width: 85%;
+  width: 95%;
   /* min-width: 320px; */
   margin: auto;
 }
@@ -27,6 +27,7 @@
 
 #TabIcon {
   margin-bottom: 0.9vh !important;
+  color: white;
 }
 
 #TabText {
@@ -35,6 +36,7 @@
   font-weight: 500;
   font-size: 1.6vh;
   margin-bottom: unset !important;
+  color: white;
 }
 
 #Tab {

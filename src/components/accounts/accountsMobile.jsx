@@ -6,14 +6,22 @@ import "../../global.js";
 
 import spotifyLogo from "../../resources/images/Spotify.png";
 
+import { Auth0Context } from "../react-auth0-spa";
+
 import $ from "jquery";
 
 import Spotify from "spotify-web-api-js";
 const spotifyWebApi = new Spotify();
 
 class AccountsMobile extends Component {
-  constructor(props) {
-    super(props);
+  static contextType = Auth0Context;
+
+  constructor(props, context) {
+    super(props, context);
+
+    if (this.props.notAuthenticated) {
+      this.context.loginWithRedirect({});
+    }
     const params = this.getHashParams();
 
     if (params.access_token) {
@@ -77,7 +85,7 @@ class AccountsMobile extends Component {
       <div className="accountsDivMobile">
         <div id="musicAccountsHeading">Music Accounts: </div>
         <div id="musicAccountsBody">Log in to access Favorites, Playlists, and Search functionality. </div>
-        <div className="spotifyBoxMobile" style={{ height: this.state.loggedIn === false ? '15%': '30%'}}>
+        <div className="spotifyBoxMobile" style={{ height: this.state.loggedIn === false ? '15vh': '30vh'}}>
           <div className="spotifyHeaderAndLogoDiv">
             <p id="spotifyHeaderMobile">Spotify</p>
             <img id="spotifyLogoMobile" src={spotifyLogo} alt=""></img>
