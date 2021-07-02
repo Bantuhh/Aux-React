@@ -6,6 +6,8 @@ import "../../global.js";
 
 import spotifyLogo from "../../resources/images/Spotify.png";
 
+import AuxProfile from "../../utils/AuxProfile"
+
 import { Auth0Context } from "../../react-auth0-spa";
 
 import $ from "jquery";
@@ -43,6 +45,11 @@ class AccountsMobile extends Component {
       userImage: global.spotifyUserImage,
     };
 
+    AuxProfile.setSpotifyData({
+      accessToken: global.spotifyAccessToken,
+      userImage: global.spotifyUserImage,
+    })
+
     this.logout = this.logout.bind(this);
   }
 
@@ -77,12 +84,24 @@ class AccountsMobile extends Component {
     });
   }
 
+  refreshSpotifyLogin() {
+    spotifyData = AuxProfile.getSpotifyData();
+
+    this.setState({
+      loggedIn: spotifyData.accessToken ? true : false,
+      accessToken: spotifyData.accessToken ? spotifyData.accessToken : "",
+      userImage: spotifyData.userImage ? spotifyData.userImage : "",
+    });
+  }
+
   render() {
     const { isAuthenticated, loginWithRedirect, logout } = this.context;
 
     if (!isAuthenticated) {
       loginWithRedirect({});
     }
+
+    this.refreshSpotifyLogin()
 
     return (
       <div className="accountsDivMobile">

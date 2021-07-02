@@ -1,6 +1,7 @@
 var AuxProfile = (function() {
     var auth_user = {};
     var current_solo_queue = [];
+    var spotify_data = {}
 
     // Auth0 User profile
     var getAuthUser = function() {
@@ -22,12 +23,26 @@ var AuxProfile = (function() {
         localStorage.setItem('currentSoloQueue', JSON.stringify(currentSoloQueue));
     }
 
+    // Spotify login data
+    var getSpotifyData = function () {
+        return localStorage.getItem("spotifyData") || spotify_data
+    }
+
+    var setSpotifyData = function (spotifyData) {
+        spotify_data = spotifyData;
+        // Also set this in cookie/localStorage
+        localStorage.setItem('spotifyData', JSON.stringify(spotifyData));
+    }
+
     return {
         getAuthUser: getAuthUser,
         setAuthUser: setAuthUser,
 
         getCurrentSoloQueue: getCurrentSoloQueue,
         setCurrentSoloQueue: setCurrentSoloQueue,
+
+        getSpotifyData: getSpotifyData,
+        setSpotifyData: setSpotifyData,
 
     }
 
