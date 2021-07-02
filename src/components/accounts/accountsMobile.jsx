@@ -6,7 +6,7 @@ import "../../global.js";
 
 import spotifyLogo from "../../resources/images/Spotify.png";
 
-import { Auth0Context } from "../react-auth0-spa";
+import { Auth0Context } from "../../react-auth0-spa";
 
 import $ from "jquery";
 
