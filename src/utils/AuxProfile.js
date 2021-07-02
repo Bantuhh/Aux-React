@@ -1,7 +1,8 @@
 var AuxProfile = (function() {
     var auth_user = {};
     var current_solo_queue = [];
-    var spotify_data = {accessToken: "",
+    var spotify_data = {loggedIn: false,
+                        accessToken: "",
                         userImage: ""}
 
     // Auth0 User profile

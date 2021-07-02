@@ -38,13 +38,16 @@ class AccountsMobile extends Component {
 
       this.props.spotifyLogin();
 
+      console.log("refreshing spotify login")
       AuxProfile.setSpotifyData({
+        loggedIn: true,
         accessToken: global.spotifyAccessToken,
         userImage: global.spotifyUserImage,
       })
 
     } 
 
+    console.log("refreshing spotify login")
     this.refreshSpotifyLogin()
 
     // this.state = {
@@ -92,12 +95,20 @@ class AccountsMobile extends Component {
   refreshSpotifyLogin() {
     var spotifyData = AuxProfile.getSpotifyData();
 
+    console.log("Retrieved Spotify data", spotifyData)
+
     this.setState({
-      loggedIn: spotifyData.accessToken ? true : false,
+      loggedIn: spotifyData.loggedIn,
       accessToken: spotifyData.accessToken,
       userImage: spotifyData.userImage,
     });
   }
+
+  state = {
+    loggedIn: false,
+    accessToken: "",
+    userImage: "",
+  };
 
   render() {
     const { isAuthenticated, loginWithRedirect, logout } = this.context;
