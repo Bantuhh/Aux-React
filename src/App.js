@@ -396,10 +396,9 @@ class App extends Component {
 
                     {/* If not logged in, redirect to Welcome page */}
                     {!isAuthenticated && <Route
-                      exact
                       path="/Accounts"
                       render={(props) => (
-                        <Welcome {...props} spotifyLogin={this.spotifyLogin} />
+                        <Accounts {...props} spotifyLogin={this.spotifyLogin} notAuthenticated={true}/>
                       )}
                     />}
                     {!isAuthenticated && <Redirect to="/Welcome" component={Welcome}/>}
