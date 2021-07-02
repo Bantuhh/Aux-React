@@ -31,19 +31,22 @@ class AccountsMobile extends Component {
       spotifyWebApi.setAccessToken(params.access_token);
       this.getUserData(params.access_token).then((response) => {
         this.setState({
+          loggedIn: global.spotifyLoggedIn,
+          accessToken: global.spotifyAccessToken,
           userImage: response.images[0].url,
         });
         global.spotifyUserImage = response.images[0].url;
+
+        console.log("Setting Aux Profile spotify login")
+        AuxProfile.setSpotifyData({
+          loggedIn: true,
+          accessToken: global.spotifyAccessToken,
+          userImage: response.images[0].url,
+        })
+
       });
 
       this.props.spotifyLogin();
-
-      console.log("refreshing spotify login")
-      AuxProfile.setSpotifyData({
-        loggedIn: true,
-        accessToken: global.spotifyAccessToken,
-        userImage: global.spotifyUserImage,
-      })
 
     } 
 
@@ -105,15 +108,16 @@ class AccountsMobile extends Component {
   }
 
   state = {
-    loggedIn: false,
-    accessToken: "",
-    userImage: "",
+    loggedIn: AuxProfile.getSpotifyData().loggedIn,
+    accessToken: AuxProfile.getSpotifyData().accessToken,
+    userImage: AuxProfile.getSpotifyData().userImage,
   };
 
   render() {
     const { isAuthenticated, loginWithRedirect, logout } = this.context;
 
     if (!isAuthenticated) {
+      console.log("Not Authenticated, relogging in")
       loginWithRedirect({});
     }
 
