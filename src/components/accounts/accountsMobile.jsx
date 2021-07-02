@@ -125,7 +125,7 @@ class AccountsMobile extends Component {
 
     return (
       <div className="accountsDivMobile">
-        <div style={{height: '50%'}}>{this.state}</div>
+        <div style={{height: '50%'}}>{JSON.stringify(this.state)}</div>
         <div id="musicAccountsHeading">Music Accounts: </div>
         <div id="musicAccountsBody">Log in to access Favorites, Playlists, and Search functionality. </div>
         <div className="spotifyBoxMobile" style={{ height: this.state.loggedIn === false ? '15vh': '30vh'}}>
