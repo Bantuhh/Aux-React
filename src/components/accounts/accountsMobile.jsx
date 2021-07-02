@@ -48,7 +48,7 @@ class AccountsMobile extends Component {
 
       this.props.spotifyLogin();
 
-    } 
+    }
 
     console.log("refreshing spotify login")
     this.refreshSpotifyLogin()
@@ -59,7 +59,7 @@ class AccountsMobile extends Component {
     //   userImage: global.spotifyUserImage,
     // };
 
-    
+
 
     this.logout = this.logout.bind(this);
   }
@@ -100,6 +100,16 @@ class AccountsMobile extends Component {
 
     console.log("Retrieved Spotify data", spotifyData)
 
+    // If logged in to spotify, send login info to api
+    if (spotifyData.accessToken) {
+      global.spotifyLoggedIn = true;
+      global.spotifyAccessToken = spotifyData.accessToken;
+      global.spotifyUserImage = spotifyData.userImage
+
+      spotifyWebApi.setAccessToken(params.access_token);
+      this.props.spotifyLogin();
+    }
+
     this.setState({
       loggedIn: spotifyData.loggedIn,
       accessToken: spotifyData.accessToken,
@@ -125,10 +135,11 @@ class AccountsMobile extends Component {
 
     return (
       <div className="accountsDivMobile">
-        <div style={{height: '50%', color: 'white'}}>{JSON.stringify(this.state)}</div>
+        <div style={{ height: '50%', color: 'white' }}>{JSON.stringify(this.state)}</div>
+        <div style={{ height: '50%', color: 'white' }}>{localStorage}</div>
         <div id="musicAccountsHeading">Music Accounts: </div>
         <div id="musicAccountsBody">Log in to access Favorites, Playlists, and Search functionality. </div>
-        <div className="spotifyBoxMobile" style={{ height: this.state.loggedIn === false ? '15vh': '30vh'}}>
+        <div className="spotifyBoxMobile" style={{ height: this.state.loggedIn === false ? '15vh' : '30vh' }}>
           <div className="spotifyHeaderAndLogoDiv">
             <p id="spotifyHeaderMobile">Spotify</p>
             <img id="spotifyLogoMobile" src={spotifyLogo} alt=""></img>
@@ -140,9 +151,9 @@ class AccountsMobile extends Component {
           ) : (
             <div id="loggedInDivMobile">
               <img
-                  className="userImageMobile"
-                  src={this.state.userImage}
-                  alt=""></img>
+                className="userImageMobile"
+                src={this.state.userImage}
+                alt=""></img>
               <div className='textAndButtonDiv'>
                 <div id="loggedInTextMobile">
                   <p id="loggedInHeaderMobile">Your Permissions Include:</p>
