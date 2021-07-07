@@ -40,7 +40,7 @@ class AccountsMobile extends Component {
         console.log("Setting Aux Profile spotify login")
         AuxProfile.setSpotifyData({
           loggedIn: true,
-          accessToken: global.spotifyAccessToken,
+          accessToken: params.access_token,
           userImage: response.images[0].url,
         })
 
@@ -51,13 +51,13 @@ class AccountsMobile extends Component {
     }
 
     console.log("refreshing spotify login")
-    this.refreshSpotifyLogin()
+    // this.refreshSpotifyLogin()
 
-    // this.state = {
-    //   loggedIn: global.spotifyLoggedIn,
-    //   accessToken: global.spotifyAccessToken,
-    //   userImage: global.spotifyUserImage,
-    // };
+    this.state = {
+      loggedIn: global.spotifyLoggedIn,
+      accessToken: global.spotifyAccessToken,
+      userImage: global.spotifyUserImage,
+    };
 
 
 
@@ -128,15 +128,13 @@ class AccountsMobile extends Component {
 
     if (!isAuthenticated) {
       console.log("Not Authenticated, relogging in")
-      loginWithRedirect({});
+      loginWithRedirect({ state: this.state });
     }
 
     // this.refreshSpotifyLogin()
 
     return (
       <div className="accountsDivMobile">
-        <div style={{ height: '50%', color: 'white' }}>{JSON.stringify(this.state)}</div>
-        <div style={{ height: '50%', color: 'white' }}>{JSON.stringify(AuxProfile.getSpotifyData())}</div>
         <div id="musicAccountsHeading">Music Accounts: </div>
         <div id="musicAccountsBody">Log in to access Favorites, Playlists, and Search functionality. </div>
         <div className="spotifyBoxMobile" style={{ height: this.state.loggedIn === false ? '15vh' : '30vh' }}>
