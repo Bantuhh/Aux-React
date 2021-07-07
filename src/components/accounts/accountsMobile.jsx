@@ -136,7 +136,7 @@ class AccountsMobile extends Component {
     return (
       <div className="accountsDivMobile">
         <div style={{ height: '50%', color: 'white' }}>{JSON.stringify(this.state)}</div>
-        <div style={{ height: '50%', color: 'white' }}>{AuxProfile.getSpotifyData()}</div>
+        <div style={{ height: '50%', color: 'white' }}>{JSON.stringify(AuxProfile.getSpotifyData())}</div>
         <div id="musicAccountsHeading">Music Accounts: </div>
         <div id="musicAccountsBody">Log in to access Favorites, Playlists, and Search functionality. </div>
         <div className="spotifyBoxMobile" style={{ height: this.state.loggedIn === false ? '15vh' : '30vh' }}>
