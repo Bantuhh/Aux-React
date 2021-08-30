@@ -178,8 +178,10 @@ function playURI(uri, token) {
       return [
         2,
         fetch(
-          "https://api.spotify.com/v1/me/player/play?device_id=" +
-            global.spotifyDeviceID,
+          "https://api.spotify.com/v1/me/player/play"
+          // ?device_id=" +
+          //   global.spotifyDeviceID
+            ,
           {
             body: JSON.stringify({ uris: [uri] }),
             headers: {
